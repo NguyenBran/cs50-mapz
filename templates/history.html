@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    History
+{% endblock %}
+
+{% block main %}
+    <h1>{{ name }}'s history</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Bought or Sold</th>
+                    <th scope="col">Company</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Number</th>
+                    <th scope="col">Date of Transaction</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for stock in info %}
+                    <tr>
+                        {% if stock["number"] < 0 %}
+                        <td>Sold</td>
+                        {% else %}
+                        <td>Bought</td>
+                        {% endif %}
+
+                        <td>{{ stock["company"] }}</td>
+                        <td>{{ stock["price"] }}</td>
+
+                        {% if stock["number"] < 0 %}
+                        <td>{{ stock["number"] * -1 }}</td>
+                        {% else %}
+                        <td>{{ stock["number"] }}</td>
+                        {% endif %}
+
+                        <td>{{ stock["date"] }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+{% endblock %}
