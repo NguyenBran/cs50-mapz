@@ -16,7 +16,7 @@ app = Flask(__name__)
 
 # test
 port = int(os.environ.get("PORT", 5000))
-app.run(debug=True, host='0.0.0.0', port=port)
+#app.run(debug=True, host='0.0.0.0', port=port)
 
 # export API_KEY=U5eDB4aCg6RdRvLOMeuzlF82C629Jrr7
 
@@ -43,6 +43,7 @@ Session(app)
 
 # Configure CS50 Library to use SQLite database
 db = SQL("postgres://quodhnxqekaccr:42ed38983413e6617acb3c2c55aad545f91166bd886cecf39e646ff9d5f48de0@ec2-107-21-120-104.compute-1.amazonaws.com:5432/d221s270qddtro")
+# sqlite:///mapz.db
 
 # Make sure API key is set
 if not os.environ.get("API_KEY"):
