@@ -14,6 +14,10 @@ from helpers import apology, login_required, lookup, usd
 # Configure application
 app = Flask(__name__)
 
+# test
+port = int(os.environ.get("PORT", 5000))
+app.run(debug=True, host='0.0.0.0', port=port)
+
 # export API_KEY=U5eDB4aCg6RdRvLOMeuzlF82C629Jrr7
 
 # Ensure templates are auto-reloaded
