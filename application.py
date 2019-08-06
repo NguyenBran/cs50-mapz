@@ -8,8 +8,9 @@ from flask_session import Session
 from tempfile import mkdtemp
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 from werkzeug.security import check_password_hash, generate_password_hash
+import psycopg2
 
-from helpers import apology, login_required
+from helpers import apology, login_required, buildDirections, getResults, totalDistance, totalTime, directions, getCoords, buildSearch, pointOfInterest
 
 # Configure application
 app = Flask(__name__)
@@ -41,7 +42,6 @@ Session(app)
 db = SQL("postgres://quodhnxqekaccr:42ed38983413e6617acb3c2c55aad545f91166bd886cecf39e646ff9d5f48de0@ec2-107-21-120-104.compute-1.amazonaws.com:5432/d221s270qddtro")
 
 
-
 @app.route("/")
 @login_required
 def index():
@@ -50,7 +50,16 @@ def index():
     # Saves the users session id
     user = session["user_id"]
 
-    return apology("TODO")
+    routes = db.execute("SELECT * FROM routes WHERE user = :user", user = user)
+    new = True
+
+    if routes:
+        return apology("TODO")
+
+    if new:
+        return render_template("index.html")
+    else:
+        return render_template("index.html")
 
 
 @app.route("/check", methods=["GET"])
@@ -134,6 +143,16 @@ def checkDest():
     if request.method == "POST":
         return apology("TODO")
     else:
+        return render_template("checkDest.html")
+
+
+@app.route("/near", methods=["GET", "POST"])
+@login_required
+def near():
+    """Find Places Nearby"""
+    if request.method == "POST":
+        return apology("TODO")
+    else:
         return apology("TODO")
 
 
@@ -210,12 +229,11 @@ def change():
         return render_template("change.html")
 
 
-@app.route("/add", methods=["GET", "POST"])
+@app.route("/route", methods=["GET", "POST"])
 @login_required
-def add():
+def route():
     """Add Navigation Route"""
     if request.method == "POST":
-
         return apology("TODO")
     else:
         return apology("TODO")

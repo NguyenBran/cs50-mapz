@@ -117,19 +117,19 @@ def totalTime(locations : list) -> int:
 # @return is the string of the navigation from the beginning location
 # to the ending location, going to all of the locations in between
 
-def directions(locations : list) -> str:
+def directions(locations : list) -> list:
     if len(locations) <= 1:
         return 0
 
     start = locations[0]
-    navigation = ""
+    navigation = []
 
     for i in range(1, len(locations)):
         results = buildDirections(start, locations[i])
 
         for legs in results['route']['legs']:
             for nav in legs['maneuvers']:
-                navigation += nav['narrative'] + "\n"
+                navigation.append(nav['narrative'])
         start = locations[i]
 
     return navigation
@@ -191,3 +191,18 @@ def pointOfInterest(locations : str, keyword : str, results : int) -> list:
         listLocations.append(place["displayString"])
 
     return listLocations
+
+def reverseGeo(lat : int, lng : int):
+    reverse = buildReverse(lat, lng)["results"]["locations"]
+
+    street = reverse["street"]
+    city = reverse["adminArea5"]
+    state = reverse["adminArea3"]
+
+    return (street, city, state)
+
+def buildReverse(lat : int, lng : int):
+    queryList = [("key", "U5eDB4aCg6RdRvLOMeuzlF82C629Jrr7"), ("location", str(lat) + "," + str(lng))]
+    url = "http://www.mapquestapi.com/geocoding/v1/reverse" + urllib.parse.urlencode(queryList)
+
+    return getResults(url)
