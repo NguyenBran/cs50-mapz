@@ -50,7 +50,7 @@ def index():
     # Saves the users session id
     user = session["user_id"]
 
-    routes = db.execute("SELECT * FROM routes WHERE user = :user", user = user)
+    routes = db.execute("SELECT * FROM routes WHERE id = :user", user = user)
     new = True
 
     if routes:
