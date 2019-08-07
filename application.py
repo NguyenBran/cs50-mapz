@@ -41,7 +41,6 @@ db = SQL("postgres://quodhnxqekaccr:42ed38983413e6617acb3c2c55aad545f91166bd886c
 
 
 @app.route("/")
-@login_required
 def index():
     """Homepage, show few of history, suggestions of things (gas, food, hotels)"""
     #routes = db.execute("SELECT * FROM routes WHERE id = :user", user = user)
