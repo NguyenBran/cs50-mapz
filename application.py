@@ -116,7 +116,7 @@ def near():
         if not request.form.get("number"):
             return apology("Please enter in the number of results you want.")
 
-        options = pointOfInterest(start_address, request.form.get("search"), request.form.get("number"))
+        options = pointOfInterest(start_address, request.form.get("search"), int(request.form.get("number")))
 
         return render_template("near.html", options=options)
     else:
