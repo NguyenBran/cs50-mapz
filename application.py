@@ -82,11 +82,11 @@ def checkDest():
         time = totalTime([start_address, end_address])
         temp = ""
         if (time // 3600) > 0:
-            temp += str(time / 3600) + "hours "
-            time /= 3600
+            temp += str(time // 3600) + "hours "
+            time %= 3600
         if (time // 60) > 0:
-            temp += str(time / 60) + "minutes "
-            time /= 60
+            temp += str(time // 60) + "minutes "
+            time %= 60
 
         temp += str(time) + "seconds"
 
