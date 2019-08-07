@@ -118,7 +118,7 @@ def near():
 
         options = pointOfInterest(start_address, request.form.get("search"), int(request.form.get("number")))
 
-        return render_template("near.html", options=options)
+        return render_template("near.html", options=options, search=request.form.get("search"))
     else:
         return render_template("near.html")
 

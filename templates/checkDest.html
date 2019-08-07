@@ -8,7 +8,6 @@
     <script>
     $(document).ready(function(){
         document.getElementById("myForm").addEventListener("submit", function(event){
-            event.preventDefault();
             if (navigator.geolocation && document.querySelector('input[name="current"]:checked')){
                 navigator.geolocation.getCurrentPosition(function(position){
                     var latitude = position.coords.latitude;
@@ -22,7 +21,6 @@
     </script>
     {% if info is defined %}
         <h1>Route Information</h1>
-        <br>
         <br>
         <div class="container">
             <div class="row">

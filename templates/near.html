@@ -20,9 +20,13 @@
         });
     </script>
     {% if options is defined %}
-        {% for option in options %}
-            <h5>{{ option }}</h5>
-        {% endfor %}
+    <h1>{{ search }} nearby!</h1>
+    <br>
+        <ul>
+            {% for option in options %}
+                <li>{{ option }}</li>
+            {% endfor %}
+        </ul>
     {% else %}
         <form action="/near" method="post" id="myForm">
             <h2>Location!</h2>
