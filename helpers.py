@@ -178,12 +178,14 @@ def pointOfInterest(locations : str, keyword : str, results : int) -> list:
 
     return listLocations
 
-def reverseGeo(lat : int, lng : int):
-    reverse = buildReverse(lat, lng)["results"]["locations"]
+def reverseGeo(coords):
+    reverse = buildReverse(coords)["results"][0]["locations"][0]
     return reverse["street"] + "," + reverse["adminArea5"] + "," + reverse["adminArea3"]
 
-def buildReverse(lat : int, lng : int):
-    queryList = [("key", "U5eDB4aCg6RdRvLOMeuzlF82C629Jrr7"), ("location", str(lat) + "," + str(lng))]
-    url = "http://www.mapquestapi.com/geocoding/v1/reverse" + urllib.parse.urlencode(queryList)
+def buildReverse(coords):
+    queryList = [("key", "U5eDB4aCg6RdRvLOMeuzlF82C629Jrr7"), ("location", coords)]
+    url = "http://www.mapquestapi.com/geocoding/v1/reverse?" + urllib.parse.urlencode(queryList)
 
     return getResults(url)
+
+print(reverseGeo("37.611929599999996,-122.413056"))

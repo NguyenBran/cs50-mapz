@@ -68,10 +68,7 @@ def checkDest():
         if (request.form.get("start_street") and request.form.get("start_city") and request.form.get("start_state")):
             start_address = request.form.get("start_street") + "," + request.form.get("start_city") + "," + request.form.get("start_state")
         elif request.form.get("current"):
-            coords = request.form["current"].split(",")
-            lat = coords[0]
-            lng = coords[1]
-            start_address = reverseGeo(lat, lng)
+            start_address = reverseGeo(request.form["current"])
         else:
             return apology("You do not have a starting location")
 
