@@ -15,8 +15,9 @@
     });
 
     function latlng(position) {
-        alert(position.coords.latitude)
-        document.getElementById("location").value = position.coords.latitude + "," + position.coords.longitude
+        document.getElementById("location").value = position.coords.latitude + "," + position.coords.longitude;
+        $('#myForm').submit();
+
     }
 
     </script>
