@@ -9,19 +9,19 @@
     $(document).ready(function(){
         document.getElementById("myForm").addEventListener("submit", function(event){
             event.preventDefault();
+            alert("here")
             if (navigator.geolocation && document.querySelector('input[name="current"]:checked')){
-                navigator.geolocation.getCurrentPosition(latlng);
+                navigator.geolocation.getCurrentPosition(function(position){
+                    var latitude = position.coords.latitude;
+                    var longitude = position.coords.longitude;
+                    alert(latitude)
+                    alert(longitude)
+                });
             }
         })
     });
 
-    function latlng(position) {
-        $.post( "/checkDest", {
-                    "lat" : position.coords.latitude
-                    "lng" : position.coords.longitude
-                });
-        $('#myForm').submit();
-    }
+
 
     </script>
     {% if info is defined %}
