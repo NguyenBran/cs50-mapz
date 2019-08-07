@@ -81,10 +81,10 @@ def checkDest():
         info["directions"] = directions([start_address, end_address])
         time = totalTime([start_address, end_address])
         temp = ""
-        if (time / 3600) > 0:
+        if (time // 3600) > 0:
             temp += str(time / 3600) + "hours "
             time /= 3600
-        if (time / 60) > 0:
+        if (time // 60) > 0:
             temp += str(time / 60) + "minutes "
             time /= 60
 

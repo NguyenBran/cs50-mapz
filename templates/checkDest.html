@@ -21,18 +21,22 @@
     });
     </script>
     {% if info is defined %}
-        <h1>test</h1>
-        <div class="col-sm-8">
-            <h2>Directions!</h2>
-            {% for nav in info["directions"] %}
-                <h6>{{ nav }}</h6>
-            {% endfor %}
-        </div>
-        <div class="col-sm-4">
-            <h2>Total Time!</h2>
-            <p>{{ info["time"] }}</p><br>
-            <h2>Total Distance!</h2>
-            <p>{{ info["distance"] }} miles to the destination</p><br>
+        <h1>Route Information</h1>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-8">
+                    <h2>Directions!</h2>
+                    {% for nav in info["directions"] %}
+                        <ul>{{ nav[0] }} for {{ nav[1] }} miles</ul>
+                    {% endfor %}
+                </div>
+                <div class="col-sm-4">
+                    <h2>Total Time!</h2>
+                    <p>{{ info["time"] }}</p><br>
+                    <h2>Total Distance!</h2>
+                    <p>{{ info["distance"] }} miles to the destination</p><br>
+                </div>
+            </div>
         </div>
 
     {% else %}
