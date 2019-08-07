@@ -135,7 +135,6 @@ def change():
 
 
 @app.route("/route", methods=["GET", "POST"])
-@login_required
 def route():
     """Add Navigation Route"""
     if request.method == "POST":
