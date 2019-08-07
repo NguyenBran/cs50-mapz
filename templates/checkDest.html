@@ -5,12 +5,36 @@
 {% endblock %}
 
 {% block main %}
+    <script>
+    $(document).ready(function(){
+        document.getElementById("myForm").addEventListener("submit", function(){
+            if (navigator.geolocation && document.querySelector('input[name="current"]:checked')){
+                navigator.geolocation.getCurrentPosition(latlng);
+
+            }
+        })
+    });
+
+    function latlng(position) {
+        $.post( "/checkDest", {
+                    "lat" : position.coords.latitude
+                    "lng" : position.coords.longitude
+                });
+    }
+
+    </script>
     {% if info is defined %}
-        <h1>TODO</h1>
+        <h1>test</h1>
+        <p>{{ info["directions"] }}</p><br>
+        <p>{{ info["time"] }}</p><br>
+        <p>{{ info["distance"] }}</p><br>
     {% else %}
-        <form action="/checkDest" method="post">
+        <form action="/checkDest" method="post" id="myForm">
             <h1>Start</h1>
             <div class = "form-group">
+                <label>Current location?</label>
+                <input class="form-check-input" name="current" value="current location" type="checkbox">
+                <label class="form-check-label">Use Current Location?</label><br>
                 <input autofocus class="form-control" name="start_street" placeholder="Street" type="text">
                 <input class="form-control" name="start_city" placeholder="City" type="text">
                 <input class="form-control" name="start_state" placeholder="State" type="text">
@@ -21,6 +45,7 @@
                 <input class="form-control" name="end_city" placeholder="City" type="text">
                 <input class="form-control" name="end_state" placeholder="State" type="text">
             </div>
+            <button class="btn btn-primary" type="submit">Search!</button>
         </form>
     {% endif %}
 {% endblock %}

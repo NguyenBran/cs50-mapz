@@ -10,7 +10,7 @@ from werkzeug.exceptions import default_exceptions, HTTPException, InternalServe
 from werkzeug.security import check_password_hash, generate_password_hash
 import psycopg2
 
-from helpers import apology, login_required, buildDirections, getResults, totalDistance, totalTime, directions, getCoords, buildSearch, pointOfInterest
+from helpers import apology, login_required, buildDirections, getResults, totalDistance, totalTime, directions, getCoords, buildSearch, pointOfInterest, reverseGeo
 
 # Configure application
 app = Flask(__name__)
@@ -141,7 +141,25 @@ def logout():
 def checkDest():
     """Check information about destination first"""
     if request.method == "POST":
-        return apology("TODO")
+        if (request.form.get("start_street") and request.form.get("start_city") and request.form.get("start_state")):
+            start_address = request.form.get("start_street") + "," + request.form.get("start_city") + "," + request.form.get("start_state")
+        elif request.form.get("current"):
+            start_address = reverseGeo(request.form["lat"], request.form["lng"])
+        else:
+            return apology("You do not have a starting location")
+
+        if (request.form.get("start_street") and request.form.get("start_city") and request.form.get("start_state")):
+            end_address = request.form.get("end_street") + "," + request.form.get("end_city") + "," + request.form.get("end_state")
+        else:
+            return apology("Please enter a destination.")
+
+        info = {}
+        info["directions"] = directions([start_address, end_address])
+        info["time"] = totalTime([start_address, end_address])
+        info["distance"] = totalDistance([start_address, end_address])
+
+        return render_template("checkDest.html", info=info)
+
     else:
         return render_template("checkDest.html")
 

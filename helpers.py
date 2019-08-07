@@ -194,12 +194,7 @@ def pointOfInterest(locations : str, keyword : str, results : int) -> list:
 
 def reverseGeo(lat : int, lng : int):
     reverse = buildReverse(lat, lng)["results"]["locations"]
-
-    street = reverse["street"]
-    city = reverse["adminArea5"]
-    state = reverse["adminArea3"]
-
-    return (street, city, state)
+    return reverse["street"] + "," + reverse["adminArea5"] + "," + reverse["adminArea3"]
 
 def buildReverse(lat : int, lng : int):
     queryList = [("key", "U5eDB4aCg6RdRvLOMeuzlF82C629Jrr7"), ("location", str(lat) + "," + str(lng))]
