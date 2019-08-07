@@ -115,7 +115,7 @@ def directions(locations : list) -> list:
 
         for legs in results['route']['legs']:
             for nav in legs['maneuvers']:
-                navigation.append((nav['narrative'], nav["distance"])
+                navigation.append((nav['narrative'], nav["distance"]))
         start = locations[i]
 
     return navigation
