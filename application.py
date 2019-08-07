@@ -103,9 +103,24 @@ def checkDest():
 def near():
     """Find Places Nearby"""
     if request.method == "POST":
-        return apology("TODO")
+        if (request.form.get("start_street") and request.form.get("start_city") and request.form.get("start_state")):
+            start_address = request.form.get("start_street") + "," + request.form.get("start_city") + "," + request.form.get("start_state")
+        elif request.form.get("current"):
+            start_address = reverseGeo(request.form["current"])
+        else:
+            return apology("You do not have a starting location")
+
+        if not request.form.get("search"):
+            return apology("Please enter what you want to search for.")
+
+        if not request.form.get("number"):
+            return apology("Please enter in the number of results you want.")
+
+        options = pointOfInterest(start_address, request.form.get("search"), request.form.get("number"))
+
+        return render_template("near.html", options=options)
     else:
-        return apology("TODO")
+        return render_template("near.html")
 
 
 
