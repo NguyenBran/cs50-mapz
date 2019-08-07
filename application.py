@@ -88,7 +88,7 @@ def checkDest():
             temp += str(time // 60) + " minutes "
             time %= 60
 
-        temp += str(time) + "seconds"
+        temp += str(time) + " seconds"
 
         info["time"] = temp
         info["distance"] = totalDistance([start_address, end_address])
