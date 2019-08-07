@@ -5,25 +5,7 @@
 {% endblock %}
 
 {% block main %}
-    <script>
-    $(document).ready(function(){
-        document.getElementById("myForm").addEventListener("submit", function(event){
-            event.preventDefault();
-            alert("here")
-            if (navigator.geolocation && document.querySelector('input[name="current"]:checked')){
-                navigator.geolocation.getCurrentPosition(function(position){
-                    var latitude = position.coords.latitude;
-                    var longitude = position.coords.longitude;
-                    document.getElementById("location").value = latitude + "," + longitude
-                    $('#myForm').submit();
-                });
-            }
-        })
-    });
-
-
-
-    </script>
+    <script src="geolocation.js"></script>
     {% if info is defined %}
         <h1>test</h1>
         <p>{{ info["directions"] }}</p><br>
