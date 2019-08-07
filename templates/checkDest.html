@@ -14,8 +14,9 @@
                 navigator.geolocation.getCurrentPosition(function(position){
                     var latitude = position.coords.latitude;
                     var longitude = position.coords.longitude;
-                    alert(latitude)
-                    alert(longitude)
+                    document.getElementById("location").value = latitude + "," + longitude
+                    alert(document.getElementById("location").value)
+                    $('#myForm').submit();
                 });
             }
         })
