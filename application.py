@@ -79,7 +79,18 @@ def checkDest():
 
         info = {}
         info["directions"] = directions([start_address, end_address])
-        info["time"] = totalTime([start_address, end_address])
+        time = totalTime([start_address, end_address])
+        temp = ""
+        if (time / 3600) > 0:
+            temp += str(time / 3600) + "hours "
+            time /= 3600
+        if (time / 60) > 0:
+            temp += str(time / 60) + "minutes "
+            time /= 60
+
+        temp += str(time) + "seconds"
+
+        info["time"] = temp
         info["distance"] = totalDistance([start_address, end_address])
 
         return render_template("checkDest.html", info=info)
