@@ -72,7 +72,7 @@ def checkDest():
         else:
             return apology("You do not have a starting location")
 
-        if (request.form.get("start_street") and request.form.get("start_city") and request.form.get("start_state")):
+        if (request.form.get("end_street") and request.form.get("end_city") and request.form.get("end_state")):
             end_address = request.form.get("end_street") + "," + request.form.get("end_city") + "," + request.form.get("end_state")
         else:
             return apology("Please enter a destination.")
