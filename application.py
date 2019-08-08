@@ -119,6 +119,8 @@ def near():
 
         if not request.form.get("number"):
             return apology("Please enter in the number of results you want.")
+        elif int(request.form.get("number")) < 1:
+            return apology("Please enter in a positve number of searches")
 
         options = pointOfInterest(start_address, request.form.get("search"), int(request.form.get("number")))
 
