@@ -57,6 +57,7 @@ def index():
 
 
 @app.route("/history")
+@login_required
 def history():
     """Show history of Travel Destinations"""
     return apology("TODO")
@@ -127,6 +128,7 @@ def near():
 
 
 @app.route("/route", methods=["GET", "POST"])
+@login_required
 def route():
     """Add Navigation Route"""
     if request.method == "POST":
