@@ -49,7 +49,6 @@ def index():
     coords = request.args.get("loc")
     #if routes:
     #    return apology("TODO")
-    return apology(coords)
 
     if new:
         return render_template("index.html", coords=coords)

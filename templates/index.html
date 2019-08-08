@@ -6,16 +6,14 @@
 
 {% block main %}
     <script>
-    $(document).ready(function(){
         if (navigator.geolocation){
             navigator.geolocation.getCurrentPosition(function(position){
                 var latitude = position.coords.latitude;
                 var longitude = position.coords.longitude;
                 alert(latitude + "," + longitude)
                 $.get("/?loc=" + latitude + "," + longitude);
-            }
-        });
-    });
+            });
+        }
     </script>
 
     <h1>Welcome to Mapz!</h1>
