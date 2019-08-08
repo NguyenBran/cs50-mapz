@@ -63,6 +63,7 @@ def history():
 
 
 @app.route("/checkDest", methods=["GET", "POST"])
+@login_required
 def checkDest():
     """Check information about destination first"""
     if request.method == "POST":
@@ -101,6 +102,7 @@ def checkDest():
 
 
 @app.route("/near", methods=["GET", "POST"])
+@login_required
 def near():
     """Find Places Nearby"""
     if request.method == "POST":
