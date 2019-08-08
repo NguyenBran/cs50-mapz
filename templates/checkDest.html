@@ -7,7 +7,7 @@
 {% block main %}
     <script>
     $(document).ready(function(){
-        document.getElementById("myForm").addEventListener("submit", function(event){
+        document.getElementById("myForm").addEventListener("submit", function(){
             if (navigator.geolocation && document.querySelector('input[name="current"]:checked')){
                 navigator.geolocation.getCurrentPosition(function(position){
                     var latitude = position.coords.latitude;
@@ -16,7 +16,7 @@
                     $('#myForm').submit();
                 });
             }
-        })
+        });
     });
     </script>
     {% if info is defined %}
@@ -42,7 +42,7 @@
         </div>
     {% else %}
         <form action="/checkDest" method="post" id="myForm">
-            <h1>Start</h1>
+            <h2>Start</h2>
             <div class = "form-group">
                 <input class="form-check-input" name="current" value="current location" type="checkbox" id="location">
                 <label class="form-check-label">Use Current Location?</label><br>
@@ -50,7 +50,7 @@
                 <input class="form-control" name="start_city" placeholder="City" type="text">
                 <input class="form-control" name="start_state" placeholder="State" type="text">
             </div>
-            <h1>End</h1>
+            <h2>End</h2>
             <div class = "form-group">
                 <input class="form-control" name="end_street" placeholder="Street" type="text">
                 <input class="form-control" name="end_city" placeholder="City" type="text">

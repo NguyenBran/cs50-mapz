@@ -6,21 +6,21 @@
 
 {% block main %}
     <script>
-        $(document).ready(function(){
-            document.getElementById("myForm").addEventListener("submit", function(event){
-                if (navigator.geolocation && document.querySelector('input[name="current"]:checked')){
-                    navigator.geolocation.getCurrentPosition(function(position){
-                        var latitude = position.coords.latitude;
-                        var longitude = position.coords.longitude;
-                        document.getElementById("location").value = latitude + "," + longitude
-                        $('#myForm').submit();
-                    });
-                }
-            })
+    $(document).ready(function(){
+        document.querySelector("input[name='current']").addEventListener("submit", function(){
+            if (navigator.geolocation && document.querySelector('input[name="current"]:checked')){
+                navigator.geolocation.getCurrentPosition(function(position){
+                    var latitude = position.coords.latitude;
+                    var longitude = position.coords.longitude;
+                    document.querySelector("input[name='current']").value = latitude + "," + longitude
+                    $('#myForm').submit();
+                });
+            }
         });
+    });
     </script>
     {% if options is defined %}
-    <h1>{{ search }} nearby!</h1>
+    <h2>{{ search }} nearby!</h2>
     <br>
         <ul>
             {% for option in options %}
@@ -31,7 +31,7 @@
         <form action="/near" method="post" id="myForm">
             <h2>Location!</h2>
             <div class = "form-group">
-                <input class="form-check-input" name="current" value="current location" type="checkbox" id="location">
+                <input class="form-check-input" name="current" type="checkbox" id="location">
                 <label class="form-check-label">Use Current Location?</label><br>
                 <input autofocus class="form-control" name="start_street" placeholder="Street" type="text">
                 <input class="form-control" name="start_city" placeholder="City" type="text">

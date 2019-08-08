@@ -5,17 +5,72 @@
 {% endblock %}
 
 {% block main %}
+    <script>
+        $(document).ready(function(){
+            document.getElementById("myForm").addEventListener("submit", function(){
+                if (navigator.geolocation && document.querySelector('input[name="current"]:checked')){
+                    navigator.geolocation.getCurrentPosition(function(position){
+                        var latitude = position.coords.latitude;
+                        var longitude = position.coords.longitude;
+                        document.querySelector('input[name="current"]').value = latitude + "," + longitude
+                        $('#myForm').submit();
+                    });
+                }
+            });
+            document.getElementById("myForm2").addEventListener("submit",function(){
+                if (navigator.geolocation && document.querySelector('input[name="current"]:checked')){
+                    navigator.geolocation.getCurrentPosition(function(position){
+                        var latitude = position.coords.latitude;
+                        var longitude = position.coords.longitude;
+                        document.document.querySelector('input[name="current"]').value = latitude + "," + longitude
+                        $('#myForm2').submit();
+                    });
+                }
+            });
+        });
+    </script>
     <h1>Welcome to Mapz!</h1>
-    <form action="/near" method="post">
-        <div class = "container">
-            <div class="row">
-                <p>Find</p>
-                <select>
-                    <option value=""></option>
-                </select>
-                <p>nearby!</p>
-                <button class="btn btn-primary" type="submit">Search!</button>
+    <div class = "container">
+        <div class="row">
+            <div class="col-sm-8">
+                <form action="/route" method="post" id="myForm">
+                    <h2>Start</h2>
+                    <div class="form-group">
+                        <input class="form-check-input" name="current" value="" type="checkbox" id="location1">
+                        <label class="form-check-label">Use Current Location?</label><br>
+                        <input autofocus class="form-control" name="start_street" placeholder="Street" type="text">
+                        <input class="form-control" name="start_city" placeholder="City" type="text">
+                        <input class="form-control" name="start_state" placeholder="State" type="text">
+                    </div>
+                    <h2>End</h2>
+                    <div class = "form-group">
+                        <input class="form-control" name="end_street" placeholder="Street" type="text">
+                        <input class="form-control" name="end_city" placeholder="City" type="text">
+                        <input class="form-control" name="end_state" placeholder="State" type="text">
+                    </div>
+                    </div>
+                    <button class="btn btn-primary" type="submit">Route!</button>
+                </form>
+            </div>
+            <div class="col-sm-8">
+                <form action="/near" method="post" id="myForm2">
+                    <h2>Location!</h2>
+                    <div class = "form-group">
+                        <input class="form-check-input" name="current" value="current location" type="checkbox" id="location">
+                        <label class="form-check-label">Use Current Location?</label><br>
+                        <input autofocus class="form-control" name="start_street" placeholder="Street" type="text">
+                        <input class="form-control" name="start_city" placeholder="City" type="text">
+                        <input class="form-control" name="start_state" placeholder="State" type="text">
+                    </div>
+                    <div class = "form-group">
+                        <input class="form-control" name="search" placeholder="Type of Search" type="text">
+                        <input class="form-control" name="number" placeholder="Number of Searches" type="number">
+                    </div>
+                    <button class="btn btn-primary" type="submit">Search!</button>
+                </form>
             </div>
         </div>
-    </form>
+    </div>
 {% endblock %}
+
+
