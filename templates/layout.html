@@ -26,18 +26,18 @@
                             var latitude = position.coords.latitude;
                             var longitude = position.coords.longitude;
                             document.querySelector("input[name='current']").value = latitude + "," + longitude
-                             $('form[name="myForm"]').submit();
+                            $('form[name="myForm"]').submit();
                         });
                     }
                 });
 
                 document.getElementById("myForm2").addEventListener("submit", function(){
-                    if (navigator.geolocation && document.querySelector('input[name="current"]:checked')){
+                    if (navigator.geolocation && document.querySelector('input[name="current2"]:checked')){
                         navigator.geolocation.getCurrentPosition(function(position){
                             var latitude = position.coords.latitude;
                             var longitude = position.coords.longitude;
-                            document.querySelector("input[name='current']").value = latitude + "," + longitude
-                             $('#myForm2').submit();
+                            document.querySelector("input[name='current2']").value = latitude + "," + longitude
+                            $('#myForm2').submit();
                         });
                     }
                 })
