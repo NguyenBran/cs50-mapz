@@ -46,7 +46,7 @@ def index():
     """Homepage, show few of history, suggestions of things (gas, food, hotels)"""
     #routes = db.execute("SELECT * FROM routes WHERE id = :user", user = user)
     new = True
-    coords = request.args.get("loc")
+    coords = request.args.get("location")
     #if routes:
     #    return apology("TODO")
 
