@@ -5,5 +5,17 @@
 {% endblock %}
 
 {% block main %}
-        <h1>Welcome to Mapz!</h1>
+    <h1>Welcome to Mapz!</h1>
+    <form action="/near" method="post">
+        <div class = "container">
+            <div class="row">
+                <p>Find</p>
+                <select>
+                    <option value=""></option>
+                </select>
+                <p>nearby!</p>
+                <button class="btn btn-primary" type="submit">Search!</button>
+            </div>
+        </div>
+    </form>
 {% endblock %}

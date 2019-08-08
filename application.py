@@ -10,7 +10,7 @@ from werkzeug.exceptions import default_exceptions, HTTPException, InternalServe
 from werkzeug.security import check_password_hash, generate_password_hash
 import psycopg2
 
-from helpers import apology, buildDirections, getResults, totalDistance, totalTime, directions, getCoords, buildSearch, pointOfInterest, reverseGeo
+from helpers import apology, buildDirections, getResults, totalDistance, totalTime, directions, getCoords, buildSearch, pointOfInterest, reverseGeo, login_required
 
 # Configure application
 app = Flask(__name__)
@@ -118,15 +118,124 @@ def near():
 
         options = pointOfInterest(start_address, request.form.get("search"), int(request.form.get("number")))
 
-        return render_template("near.html", options=options, search=request.form.get("search"))
+        return render_template("near.html", options=options, search=request.form.get("search").capitalize())
     else:
         return render_template("near.html")
 
 
+@app.route("/route", methods=["GET", "POST"])
+def route():
+    """Add Navigation Route"""
+    if request.method == "POST":
+        return apology("TODO")
+    else:
+        return apology("TODO")
+
+@app.route("/check", methods=["GET"])
+def check():
+    """Return true if username available, else false, in JSON format"""
+
+    # Gets the potential username of the user
+    username = request.args.get("username")
+
+    # If nothing was entered return false
+    if username == "":
+        return jsonify(False)
+
+    # Checks to see if the username is already registered
+    list_users = db.execute("SELECT username FROM users WHERE username = :username", username=username)
+    if list_users:
+        return jsonify(False)
+
+    return jsonify(True)
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    """Log user in"""
+
+    # Forget any user_id
+    session.clear()
+
+    # User reached route via POST (as by submitting a form via POST)
+    if request.method == "POST":
+
+        # Ensure username was submitted
+        if not request.form.get("username"):
+            return apology("must provide username", 403)
+
+        # Ensure password was submitted
+        elif not request.form.get("password"):
+            return apology("must provide password", 403)
+
+        # Query database for username
+        rows = db.execute("SELECT * FROM users WHERE username = :username",
+                          username=request.form.get("username"))
+
+        # Ensure username exists and password is correct
+        if len(rows) != 1 or not check_password_hash(rows[0]["hash"], request.form.get("password")):
+            return apology("invalid username and/or password", 403)
+
+        # Remember which user has logged in
+        session["user_id"] = rows[0]["id"]
+
+        # Redirect user to home page
+        return redirect("/")
+
+    # User reached route via GET (as by clicking a link or via redirect)
+    else:
+        return render_template("login.html")
+
+
+@app.route("/logout")
+def logout():
+    """Log user out"""
+
+    # Forget any user_id
+    session.clear()
+
+    # Redirect user to login form
+    return redirect("/")
+
+
+@app.route("/register", methods=["GET", "POST"])
+def register():
+    """Register user"""
+    if request.method == "POST":
+
+        # Obtains the username and password entered by the user
+        username = request.form.get("username")
+        password = request.form.get("password")
+        confirm = request.form.get("confirmation")
+
+        # Checks to see if a username was entered and if it is already in the database
+        if not username:
+            return apology("Please enter a username.")
+        elif db.execute("SELECT username FROM users WHERE :username = username", username=username):
+            return apology("Username already exists.")
+
+        # Checks to see if a password and confirmation password were entered and if they match
+        if not password:
+            return apology("Please enter a password.")
+        elif not confirm:
+            return apology("Please confirm your password.")
+        elif password != confirm:
+            return apology("Passwords don't match.")
+
+        # Inserts the user into the database
+        db.execute("INSERT INTO users(username, hash) VALUES(:username, :hashed)",
+                   username=username, hashed=generate_password_hash(password))
+
+        # Saves the session of the user and logs them into the account
+        session["user_id"] = db.execute("SELECT id FROM users WHERE :username = username", username=username)[0]["id"]
+
+        return redirect("/")
+    else:
+        return render_template("register.html")
 
 @app.route("/change", methods=["GET", "POST"])
+@login_required
 def change():
-    """Change the users password (Check if implementation is similar or not"""
+    """Change the users password"""
     if request.method == "POST":
 
         # Obtains the old password, new password, and confirmation password
@@ -159,14 +268,6 @@ def change():
     else:
         return render_template("change.html")
 
-
-@app.route("/route", methods=["GET", "POST"])
-def route():
-    """Add Navigation Route"""
-    if request.method == "POST":
-        return apology("TODO")
-    else:
-        return apology("TODO")
 
 
 def errorhandler(e):
