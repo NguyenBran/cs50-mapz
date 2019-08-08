@@ -110,7 +110,6 @@ def near():
         if (request.form.get("start_street") and request.form.get("start_city") and request.form.get("start_state")):
             start_address = request.form.get("start_street") + "," + request.form.get("start_city") + "," + request.form.get("start_state")
         elif request.form["current"]:
-            return apology(request.form["current"])
             start_address = reverseGeo(request.form["current"])
         else:
             return apology("You do not have a starting location")
