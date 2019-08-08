@@ -11,7 +11,7 @@
                 var latitude = position.coords.latitude;
                 var longitude = position.coords.longitude;
                 var coords = latitude + "," + longitude;
-                alert(latitude + "," + longitude)
+                alert(coords)
                 $.get("/?location=" + coords);
             });
         }
