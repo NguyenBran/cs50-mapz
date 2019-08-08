@@ -179,7 +179,6 @@ def pointOfInterest(locations : str, keyword : str, results : int) -> list:
     return listLocations
 
 def reverseGeo(coords):
-    print(coords)
     reverse = buildReverse(coords)["results"][0]["locations"][0]
     return reverse["street"] + "," + reverse["adminArea5"] + "," + reverse["adminArea3"]
 
