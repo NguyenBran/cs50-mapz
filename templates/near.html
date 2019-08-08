@@ -7,7 +7,7 @@
 {% block main %}
     <script>
     $(document).ready(function(){
-        document.querySelector("input[name='current']").addEventListener("submit", function(){
+        document.querySelector("form[name='myForm']").addEventListener("submit", function(){
             alert("woah")
             if (navigator.geolocation && document.querySelector('input[name="current"]:checked')){
                 navigator.geolocation.getCurrentPosition(function(position){
@@ -30,7 +30,7 @@
             {% endfor %}
         </ul>
     {% else %}
-        <form action="/near" method="post" id="myForm">
+        <form action="/near" method="post" name="myForm">
             <h2>Location!</h2>
             <div class = "form-group">
                 <input class="form-check-input" name="current" type="checkbox" id="location">
