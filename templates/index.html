@@ -5,24 +5,11 @@
 {% endblock %}
 
 {% block main %}
-    <script>
-        $(document).ready(function(){
-            document.getElementById("myForm").addEventListener("submit", function(){
-                if (navigator.geolocation && document.querySelector('input[name="current"]:checked')){
-                    navigator.geolocation.getCurrentPosition(function(position){
-                        var latitude = position.coords.latitude;
-                        var longitude = position.coords.longitude;
-                        document.querySelector('input[name="current"]').value = latitude + "," + longitude
-                    });
-                }
-            });
-        });
-    </script>
     <h1>Welcome to Mapz!</h1>
     <div class = "container">
         <div class="row">
             <div class="col-sm-8">
-                <form action="/route" method="post" id="myForm">
+                <form action="/route" method="post" name="myForm">
                     <h2>Start</h2>
                     <div class="form-group">
                         <input class="form-check-input" name="current" value="" type="checkbox" id="location1">
