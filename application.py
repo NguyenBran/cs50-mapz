@@ -44,7 +44,7 @@ db = SQL("postgres://quodhnxqekaccr:42ed38983413e6617acb3c2c55aad545f91166bd886c
 def index():
     """Homepage, show few of history, suggestions of things (gas, food, hotels)"""
     if request.method == "POST":
-        location = reverseGeo(request.form.get("location"))
+        location = reverseGeo(request.form.get("val1"))
         return render_template("index.html", location=location)
 
     else:
