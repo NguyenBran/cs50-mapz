@@ -50,8 +50,9 @@ def index():
 @app.route("/display", methods=["GET"])
 @login_required
 def display():
-    location = request.args.get("location")
-    return apology(request.args.get("location"))
+    if request.method == 'GET'
+        location = request.args.get("location")
+        return apology(request.args.get("location"))
     return jsonify(location)
 
 @app.route("/history")
