@@ -44,11 +44,9 @@ db = SQL("postgres://quodhnxqekaccr:42ed38983413e6617acb3c2c55aad545f91166bd886c
 def index():
     """Homepage, show few of history, suggestions of things (gas, food, hotels)"""
     if request.method == "POST":
-    #routes = db.execute("SELECT * FROM routes WHERE id = :user", user = user)
-        location = reverseGeo(request.form["coords"])
-
-
         return apology("here")
+        location = reverseGeo(request.form["coords"])
+        return apology("here2")
         return render_template("index.html", location=location)
 
     else:

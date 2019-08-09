@@ -12,9 +12,9 @@
                     navigator.geolocation.getCurrentPosition(function(position){
                         var latitude = position.coords.latitude;
                         var longitude = position.coords.longitude;
-                        var loc = document.createElement("INPUT")
-                        loc.name = "coords"
-                        loc.value = latitude + "," + longitude
+                        var loc = document.createElement("INPUT");
+                        loc.name = "coords";
+                        loc.value = latitude + "," + longitude;
                         alert("here")
                         $('#locForm').submit();
                     });
