@@ -6,19 +6,15 @@
 
 {% block main %}
     <script>
-        $(document).ready(function(){
-            document.getElementById("locForm").addEventListener("submit", function(){
-                if (navigator.geolocation){
-                    navigator.geolocation.getCurrentPosition(function(position){
-                        var latitude = position.coords.latitude;
-                        var longitude = position.coords.longitude;
-                        document.querySelector("button[name='coords']").value = latitude + "," + longitude;
-                        alert("here")
-                        $('form[name="locForm"]').submit();
-                    });
-                }
-            });
-        });
+        function coords(){
+            if (navigator.geolocation){
+                navigator.geolocation.getCurrentPosition(function(position){
+                    var latitude = position.coords.latitude;
+                    var longitude = position.coords.longitude;
+                    return latitude + "," + longitude
+                });
+            }
+        }
     </script>
 
     <h1>Welcome to Mapz!</h1>
@@ -41,7 +37,7 @@
                 </div>
             </div>
         </div><br>
-        <button class="btn btn-primary" type="submit" name="coords" value = "woah">Click for Information!</button>
+        <button class="btn btn-primary" type="submit" name="coords" value = "coords()">Click for Information!</button>
     </form>
     <form action="/route" method="post" name="myForm">
         <br><h2>Start</h2>
