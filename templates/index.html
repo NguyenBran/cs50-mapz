@@ -50,8 +50,8 @@
                 navigator.geolocation.getCurrentPosition(function(position){
                     var latitude = position.coords.latitude;
                     var longitude = position.coords.longitude;
-                    document.querySelector("button[name='coords']").value = latitude + "," + longitude;
-                    alert(document.querySelector("button[name='coords']").value)
+                    document.querySelector("button[name='location']").value = latitude + "," + longitude;
+                    alert(document.querySelector("button[name='location']").value)
                     $('form[name="locForm"]').submit();
                 });
             }
