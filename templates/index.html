@@ -6,20 +6,6 @@
 
 {% block main %}
     <script>
-        $(document).ready(function(){
-            document.getElementById("locForm").addEventListener("submit", function(){
-                if (navigator.geolocation){
-                    navigator.geolocation.getCurrentPosition(function(position){
-                        var latitude = position.coords.latitude;
-                        var longitude = position.coords.longitude;
-                        document.querySelector("button[name='coords']").value = latitude + "," + longitude;
-                        alert("here")
-                        $('form[name="locForm"]').submit();
-                    });
-                }
-            });
-        });
-
         function coords(){
             if (navigator.geolocation){
                 navigator.geolocation.getCurrentPosition(function(position){
