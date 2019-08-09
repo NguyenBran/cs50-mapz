@@ -51,7 +51,7 @@ def index():
     if coords:
         return render_template("index.html", coords=coords)
     else:
-        return render_template("index.html")
+        return render_template("")
 
 
 @app.route("/history")
