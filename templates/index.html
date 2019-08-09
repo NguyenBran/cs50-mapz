@@ -11,7 +11,7 @@
                 navigator.geolocation.getCurrentPosition(function(position){
                     var latitude = position.coords.latitude;
                     var longitude = position.coords.longitude;
-                    document.form.button.value = latitude + "," + longitude;
+                    document.getElementById("loc").value = latitude + "," + longitude;
                 });
             }
         }
@@ -37,7 +37,7 @@
                 </div>
             </div>
         </div><br>
-        <button class="btn btn-primary" type="submit" name="coords" value = "woah" onclick="coords();">Click for Information!</button>
+        <button class="btn btn-primary" type="submit" name="coords" value = "woah" onclick="coords();" id="loc">Click for Information!</button>
     </form>
     <form action="/route" method="post" name="myForm">
         <br><h2>Start</h2>
