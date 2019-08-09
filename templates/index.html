@@ -12,9 +12,7 @@
                     navigator.geolocation.getCurrentPosition(function(position){
                         var latitude = position.coords.latitude;
                         var longitude = position.coords.longitude;
-                        var loc = document.createElement("INPUT");
-                        loc.name = "coords";
-                        loc.value = latitude + "," + longitude;
+                        document.querySelector("input[name='current']").value = latitude + "," + longitude;
                         alert("here")
                         $('#locForm').submit();
                     });
@@ -28,7 +26,6 @@
         <h3>Would you like to know about some places near your area? Click below to find out!</h3><br>
         <div class = "container">
             <div class = "row">
-                <input name="coords">
                 <div class = "col-sm-3" name = "food">
                     <h4>Foods</h4>
                     <p>{{ location }}</p>
@@ -44,7 +41,7 @@
                 </div>
             </div>
         </div><br>
-        <button class="btn btn-primary" type="submit">Click for Information!</button>
+        <button class="btn btn-primary" type="submit">Click for Information!</button><br>
     </form>
     <form action="/route" method="post" name="myForm">
         <h2>Start</h2>
