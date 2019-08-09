@@ -51,7 +51,7 @@ def index():
     #    return apology("TODO")
 
     if new:
-        return render_template("index.html", coords=coords)
+        return render_template("index.html", coords=request.args.get("location"))
     else:
         return render_template("index.html")
 
