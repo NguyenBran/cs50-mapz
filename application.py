@@ -43,12 +43,15 @@ db = SQL("postgres://quodhnxqekaccr:42ed38983413e6617acb3c2c55aad545f91166bd886c
 @login_required
 def index():
     """Homepage, show few of history, suggestions of things (gas, food, hotels)"""
-    if request.args.get("loc"):
-        return apology(request.args.get("loc"))
-        return jsonify(request.args.get("loc"), "food", "gas", "dessert")
-    else:
-        return render_template("index.html")
 
+    return render_template("index.html")
+
+
+@app.route("/display", methods=["GET"])
+@login_required
+def display():
+    location = request.args.get("loc")
+    return jsonify(location)
 
 @app.route("/history")
 @login_required

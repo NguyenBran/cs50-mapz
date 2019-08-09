@@ -64,7 +64,7 @@
                     var latitude = position.coords.latitude;
                     var longitude = position.coords.longitude;
                     alert("here2")
-                    $.get("/?loc=" + latitude + "," + longitude, function(result) {
+                    $.get("/display?loc=" + latitude + "," + longitude, function(result) {
                         alert(result)
                     });
                 });
