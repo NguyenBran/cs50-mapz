@@ -49,7 +49,7 @@ def index():
     #if routes:
     #    return apology("TODO")
     if not coords:
-    return render_template("index.html", coords=coords)
+        return render_template("index.html", coords=coords)
 
 
 @app.route("/history")
