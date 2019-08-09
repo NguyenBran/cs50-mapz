@@ -13,6 +13,7 @@
                 var coords = latitude + "," + longitude;
                 alert(coords)
                 $.get("/?location=" + coords);
+                location.reload();
             });
         }
     </script>
