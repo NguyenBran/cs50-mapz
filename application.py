@@ -51,6 +51,7 @@ def index():
 @login_required
 def display():
     location = request.args.get("loc")
+    return apology(request.args.get("loc"))
     return jsonify(location)
 
 @app.route("/history")
