@@ -35,7 +35,7 @@
             </div>
         </div>
     </div><br>
-    <button class="btn btn-primary" onclick="myFunction()">Click for Information!</button>
+    <button class="btn btn-primary" id="myBtn">Click for Information!</button>
 
     <form action="/route" method="post" name="myForm">
         <br><h2>Start</h2>
@@ -55,19 +55,19 @@
         <button class="btn btn-primary" type="submit">Route!</button>
     </form>
     <script>
-        function myFunction(){
-            alert("here")
-            if (navigator.geolocation){
+        $(document).ready(function(){
+        document.getElementById("myBtn").addEventListener("click", function(event){
+            if (navigator.geolocation && document.querySelector('input[name="current"]:checked')){
                 navigator.geolocation.getCurrentPosition(function(position){
                     var latitude = position.coords.latitude;
                     var longitude = position.coords.longitude;
-                    alert("here2")
-                    $.get("/display?loc=" + latitude + "," + longitude, function(result) {
-                        alert(result)
+                    $.get("/display?location=" + latitude + "," + longitude, function(result) {
+                        alert("works");
                     });
                 });
             }
-        }
+        });
+    });
     </script>
 {% endblock %}
 
