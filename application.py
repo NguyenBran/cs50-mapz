@@ -45,7 +45,7 @@ def index():
     """Homepage, show few of history, suggestions of things (gas, food, hotels)"""
     if request.args.get("loc"):
         return apology(request.args.get("loc"))
-        return (request.args.get("loc"), "food", "gas", "dessert")
+        return jsonify(request.args.get("loc"), "food", "gas", "dessert")
     else:
         return render_template("index.html")
 
