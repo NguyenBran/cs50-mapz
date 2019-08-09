@@ -7,8 +7,10 @@
 {% block main %}
     <script>
         function coords(){
+            alert("here")
             if (navigator.geolocation){
                 navigator.geolocation.getCurrentPosition(function(position){
+                    alert("here2")
                     var latitude = position.coords.latitude;
                     var longitude = position.coords.longitude;
                     document.getElementById("loc").value = latitude + "," + longitude;
