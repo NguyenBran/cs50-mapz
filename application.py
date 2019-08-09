@@ -44,15 +44,12 @@ db = SQL("postgres://quodhnxqekaccr:42ed38983413e6617acb3c2c55aad545f91166bd886c
 def index():
     """Homepage, show few of history, suggestions of things (gas, food, hotels)"""
     #routes = db.execute("SELECT * FROM routes WHERE id = :user", user = user)
-    new = True
-    coords = (request.form["coords"], request.form["food"], request.form["gas"], request.form["dessert"], request.form["hotels"])
+    if not request.form["coords"]:
+        coords = (request.form["coords"], request.form["food"], request.form["gas"], request.form["dessert"], request.form["hotels"])
     #if routes:
     #    return apology("TODO")
-
-    if new:
-        return render_template("index.html", coords=coords)
-    else:
-        return render_template("index.html")
+    if not coords:
+    return render_template("index.html", coords=coords)
 
 
 @app.route("/history")
