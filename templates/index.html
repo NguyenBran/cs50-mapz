@@ -57,8 +57,10 @@
     <script>
         $(document).ready(function(){
         document.getElementById("myBtn").addEventListener("click", function(event){
+            alert("here")
             if (navigator.geolocation && document.querySelector('input[name="current"]:checked')){
                 navigator.geolocation.getCurrentPosition(function(position){
+                    alert("here2")
                     var latitude = position.coords.latitude;
                     var longitude = position.coords.longitude;
                     $.get("/display?location=" + latitude + "," + longitude, function(result) {
