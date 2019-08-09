@@ -12,7 +12,7 @@
             <div class = "row">
                 <div class = "col-sm-3">
                     <h4>Foods</h4>
-                    <p>{{ location }}</p>
+                    <p></p>
                 </div>
                 <div class = "col-sm-3">
                     <h4>Desserts</h4>
@@ -49,11 +49,9 @@
             alert("here")
             if (navigator.geolocation){
                 navigator.geolocation.getCurrentPosition(function(position){
-                    alert("here2")
                     var latitude = position.coords.latitude;
                     var longitude = position.coords.longitude;
                     document.getElementById("loc").value = latitude + "," + longitude;
-                    alert(document.getElementById("loc").value)
                     $('form[name="locForm"]').submit();
                 });
             }
