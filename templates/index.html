@@ -6,39 +6,61 @@
 
 {% block main %}
     <script>
-        if (navigator.geolocation){
-            navigator.geolocation.getCurrentPosition(function(position){
-                var latitude = position.coords.latitude;
-                var longitude = position.coords.longitude;
-                var coords = latitude + "," + longitude;
-                alert(coords)
-                $.get("/?location=" + coords);
-                location.reload();
+        $(document).ready(function(){
+            document.getElementById("locForm").addEventListener("submit", function(){
+                if (navigator.geolocation){
+                    navigator.geolocation.getCurrentPosition(function(position){
+                        var latitude = position.coords.latitude;
+                        var longitude = position.coords.longitude;
+                        $.post( "/", {
+                            coords: latitude + "," + longitude,
+                            food: "restaurant",
+                            gas: "gas",
+                            dessert: "dessert",
+                            hotels: "hotels"
+                        });
+                    });
+                }
             });
-        }
+        });
     </script>
 
     <h1>Welcome to Mapz!</h1>
-    <h2>{{ coords }}</h2>
-    <div class="col-sm-8">
-        <form action="/route" method="post" name="myForm">
-            <h2>Start</h2>
-            <div class="form-group">
-                <input class="form-check-input" name="current" value="" type="checkbox" id="location1">
-                <label class="form-check-label">Use Current Location?</label><br>
-                <input autofocus class="form-control" name="start_street" placeholder="Street" type="text">
-                <input class="form-control" name="start_city" placeholder="City" type="text">
-                <input class="form-control" name="start_state" placeholder="State" type="text">
-            </div>
-            <h2>End</h2>
-            <div class = "form-group">
-                <input class="form-control" name="end_street" placeholder="Street" type="text">
-                <input class="form-control" name="end_city" placeholder="City" type="text">
-                <input class="form-control" name="end_state" placeholder="State" type="text">
-            </div>
-            <button class="btn btn-primary" type="submit">Route!</button>
-        </form>
-    </div>
+    <form action="/" method="post" id="locForm">
+        <h4>Would you like to know about some places near your area? Click below to find out!</h4>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Foods</th>
+                    <th scope="col">Gas</th>
+                    <th scope="col">Desserts</th>
+                    <th scope="col">Hotels</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if info is defined %}
+                    <p>TODO</p>
+                {% endif %}
+            </tbody>
+        <button class="btn btn-primary" type="submit">Click for Information!</button>
+    </form>
+    <form action="/route" method="post" name="myForm">
+        <h2>Start</h2>
+        <div class="form-group">
+            <input class="form-check-input" name="current" value="" type="checkbox" id="location1">
+            <label class="form-check-label">Use Current Location?</label><br>
+            <input autofocus class="form-control" name="start_street" placeholder="Street" type="text">
+            <input class="form-control" name="start_city" placeholder="City" type="text">
+            <input class="form-control" name="start_state" placeholder="State" type="text">
+        </div>
+        <h2>End</h2>
+        <div class = "form-group">
+            <input class="form-control" name="end_street" placeholder="Street" type="text">
+            <input class="form-control" name="end_city" placeholder="City" type="text">
+            <input class="form-control" name="end_state" placeholder="State" type="text">
+        </div>
+        <button class="btn btn-primary" type="submit">Route!</button>
+    </form>
 {% endblock %}
 
 
