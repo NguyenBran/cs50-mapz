@@ -12,6 +12,7 @@
                     var latitude = position.coords.latitude;
                     var longitude = position.coords.longitude;
                     document.getElementById("loc").value = latitude + "," + longitude;
+                    $('form[name="locForm"]').submit();
                 });
             }
         }
