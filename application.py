@@ -52,7 +52,7 @@ def index():
         gas = pointOfInterest(location, "gas", 4)
         hotels = pointOfInterest(location, "hotel", 4)
         info = [food, dessert, gas, hotels]
-
+        return apology("here")
         return render_template("index.html", location=location)
 
     else:
