@@ -46,12 +46,12 @@
     </form>
     <script>
         function myFunction(){
-            alert("here")
             if (navigator.geolocation){
                 navigator.geolocation.getCurrentPosition(function(position){
                     var latitude = position.coords.latitude;
                     var longitude = position.coords.longitude;
-                    document.getElementById("loc").value = latitude + "," + longitude;
+                    document.querySelector("button[name='coords']").value = latitude + "," + longitude;
+                    alert(document.querySelector("button[name='coords']").value)
                     $('form[name="locForm"]').submit();
                 });
             }
