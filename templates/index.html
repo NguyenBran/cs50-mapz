@@ -5,22 +5,6 @@
 {% endblock %}
 
 {% block main %}
-    <script>
-        function coords(){
-            alert("here")
-            if (navigator.geolocation){
-                navigator.geolocation.getCurrentPosition(function(position){
-                    alert("here2")
-                    var latitude = position.coords.latitude;
-                    var longitude = position.coords.longitude;
-                    document.getElementById("loc").value = latitude + "," + longitude;
-                    alert(document.getElementById("loc").value)
-                    $('form[name="locForm"]').submit();
-                });
-            }
-        }
-    </script>
-
     <h1>Welcome to Mapz!</h1>
     <form action="/" method="post" name="locForm">
         <h3>Would you like to know about some places near your area? Click below to find out!</h3><br>
@@ -60,6 +44,21 @@
         </div>
         <button class="btn btn-primary" type="submit">Route!</button>
     </form>
+    <script>
+        function coords(){
+            alert("here")
+            if (navigator.geolocation){
+                navigator.geolocation.getCurrentPosition(function(position){
+                    alert("here2")
+                    var latitude = position.coords.latitude;
+                    var longitude = position.coords.longitude;
+                    document.getElementById("loc").value = latitude + "," + longitude;
+                    alert(document.getElementById("loc").value)
+                    $('form[name="locForm"]').submit();
+                });
+            }
+        }
+    </script>
 {% endblock %}
 
 
