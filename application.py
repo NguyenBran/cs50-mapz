@@ -45,7 +45,7 @@ def index():
     """Homepage, show few of history, suggestions of things (gas, food, hotels)"""
     if request.method == "POST":
     #routes = db.execute("SELECT * FROM routes WHERE id = :user", user = user)
-        location = reverseGeo(request.form["current"])
+        location = reverseGeo(request.form["coords"])
 
         food = pointOfInterest(location, "restaurant", 4)
         dessert = pointOfInterest(location, "dessert", 4)
@@ -53,7 +53,7 @@ def index():
         hotels = pointOfInterest(location, "hotel", 4)
         info = [food, dessert, gas, hotels]
 
-        return info
+        return render_template("index.html", location=location)
 
     else:
         return render_template("index.html")
