@@ -39,17 +39,15 @@ Session(app)
 # Configure CS50 Library to use Postgres database
 db = SQL("postgres://quodhnxqekaccr:42ed38983413e6617acb3c2c55aad545f91166bd886cecf39e646ff9d5f48de0@ec2-107-21-120-104.compute-1.amazonaws.com:5432/d221s270qddtro")
 
-@app.route("/", methods=["GET"])
+@app.route("/", methods=["GET", "POST"])
 @login_required
 def index():
     """Homepage, show few of history, suggestions of things (gas, food, hotels)"""
+    if request.method == "POST":
     #routes = db.execute("SELECT * FROM routes WHERE id = :user", user = user)
-    if not request.form["coords"]:
         coords = (request.form["coords"], request.form["food"], request.form["gas"], request.form["dessert"], request.form["hotels"])
-    #if routes:
-    #    return apology("TODO")
-    if coords:
         return render_template("index.html", coords=coords)
+
     else:
         return render_template("index.html")
 
