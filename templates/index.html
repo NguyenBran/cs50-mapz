@@ -65,7 +65,6 @@
                     var longitude = position.coords.longitude;
                     $.get("/display?location=" + latitude + "," + longitude, function(result) {
                         alert(result["food"])
-                        document.getElementById("food").innerHTML = <li>result["food"]</li>;
                     });
                 });
             }
