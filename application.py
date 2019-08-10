@@ -57,7 +57,15 @@ def display():
         gas = pointOfInterest(location, "gas", 4)
         hotel = pointOfInterest(location, "hotel", 4)
 
-        return jsonify(location, food, dessert, gas, hotel)
+        info = {
+            "location": location,
+            "food": food,
+            "dessert": dessert,
+            "gas": gas,
+            "hotel": hotel
+        }
+
+        return jsonify(info)
 
     return jsonify(location)
 
