@@ -26,7 +26,7 @@
                     <p id="distance">{{ info["distance"] }} miles to the destination!</p><br>
                 </div>
             </div>
-            <button class="btn btn-primary" id="myBtn">Click for Information!</button>
+            <button class="btn btn-primary" id="myBtn">Click to refresh route Guidance!</button>
         </div>
     {% else %}
         <form action="/route" method="post" name="myForm">
@@ -55,7 +55,15 @@
                     var latitude = position.coords.latitude;
                     var longitude = position.coords.longitude;
                     $.get("/update?location=" + latitude + "," + longitude + "&destination=" + $("h4").text(), function(result) {
-                        alert(result)
+                        var text = "";
+                        for (i = 0; i < result["route"].length; i++){
+                            text += "<li>" +info[i] + "</li>";
+                        }
+                        $("ul[id='route']").html(text);
+
+                        $("p[id='time']").html(result["time"]);
+
+                        $("p[id='distance']").html(result("distance") + " miles to the destination!");
                     });
                 });
             }
