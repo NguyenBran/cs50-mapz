@@ -55,21 +55,31 @@
         <button class="btn btn-primary" type="submit">Route!</button>
     </form>
     <script>
-        $(document).ready(function(){
+    $(document).ready(function(){
         document.getElementById("myBtn").addEventListener("click", function(event){
-            alert("here")
             if (navigator.geolocation){
                 navigator.geolocation.getCurrentPosition(function(position){
-                    alert("here2")
                     var latitude = position.coords.latitude;
                     var longitude = position.coords.longitude;
                     $.get("/display?location=" + latitude + "," + longitude, function(result) {
-                        alert(result["food"])
+                        for (item in result){
+                            addList(result[item], item)
+                            alert("here")
+                        }
                     });
                 });
             }
         });
     });
+
+    function addList(info, name){
+        for (i = 0; i < info.length; i++){
+            var add = document.createElement("li");
+            var text = document.createTextNode(info[i]);
+            add.appendChild(text);
+            document.getElementById(name).appendChild(add);
+        }
+    }
     </script>
 {% endblock %}
 

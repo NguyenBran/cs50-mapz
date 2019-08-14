@@ -52,7 +52,7 @@ def index():
 def display():
     if request.method == 'GET':
         location = reverseGeo(request.args.get("location"))
-        food = pointOfInterest(location, "food", 4)
+        food = pointOfInterest(location, "restaurant", 4)
         dessert = pointOfInterest(location, "dessert", 4)
         gas = pointOfInterest(location, "gas", 4)
         hotel = pointOfInterest(location, "hotel", 4)
