@@ -82,9 +82,9 @@ def history():
     return apology("TODO")
 
 
-@app.route("/checkDest", methods=["GET", "POST"])
+@app.route("/route", methods=["GET", "POST"])
 @login_required
-def checkDest():
+def route():
     """Check information about destination first"""
     if request.method == "POST":
         if (request.form.get("start_street") and request.form.get("start_city") and request.form.get("start_state")):
@@ -115,10 +115,10 @@ def checkDest():
         info["time"] = temp
         info["distance"] = totalDistance([start_address, end_address])
 
-        return render_template("checkDest.html", info=info)
+        return render_template("route.html", info=info)
 
     else:
-        return render_template("checkDest.html")
+        return render_template("route.html")
 
 
 @app.route("/near", methods=["GET", "POST"])
@@ -146,16 +146,6 @@ def near():
         return render_template("near.html", options=options, search=request.form.get("search").capitalize())
     else:
         return render_template("near.html")
-
-
-@app.route("/route", methods=["GET", "POST"])
-@login_required
-def route():
-    """Add Navigation Route"""
-    if request.method == "POST":
-        return apology("TODO")
-    else:
-        return render_template("route.html")
 
 @app.route("/check", methods=["GET"])
 def check():

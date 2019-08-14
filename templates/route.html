@@ -1,1 +1,48 @@
-{% extends "checkDest.html" %}
+{% extends "layout.html" %}
+
+{% block title %}
+    Route Information
+{% endblock %}
+
+{% block main %}
+    {% if info is defined %}
+        <h1>Route Information</h1>
+        <br>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-8">
+                    <h2>Directions!</h2>
+                    {% for nav in info["directions"] %}
+                        <ul>
+                            <li><strong>{{ nav[0] }}</strong> for <strong>{{ nav[1] }}</strong> miles</li>
+                        </ul>
+                    {% endfor %}
+                </div>
+                <div class="col-sm-4">
+                    <h2>Total Time!</h2>
+                    <p>{{ info["time"] }}</p><br>
+                    <h2>Total Distance!</h2>
+                    <p>{{ info["distance"] }} miles to the destination!</p><br>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <form action="/route" method="post" name="myForm">
+            <h2>Start</h2>
+            <div class = "form-group">
+                <input class="form-check-input" name="current" value="current location" type="checkbox" id="location">
+                <label class="form-check-label">Use Current Location?</label><br>
+                <input autofocus class="form-control" name="start_street" placeholder="Street" type="text">
+                <input class="form-control" name="start_city" placeholder="City" type="text">
+                <input class="form-control" name="start_state" placeholder="State" type="text">
+            </div>
+            <h2>End</h2>
+            <div class = "form-group">
+                <input class="form-control" name="end_street" placeholder="Street" type="text">
+                <input class="form-control" name="end_city" placeholder="City" type="text">
+                <input class="form-control" name="end_state" placeholder="State" type="text">
+            </div>
+            <button class="btn btn-primary" type="submit">Route!</button>
+        </form>
+    {% endif %}
+{% endblock %}
