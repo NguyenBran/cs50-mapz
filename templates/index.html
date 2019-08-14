@@ -75,14 +75,11 @@
     });
 
     function addList(info, name){
+        var text = "<li>";
         for (i = 0; i < info.length; i++){
             alert("here2")
-            var add = document.createElement("li");
-            var text = document.createTextNode(info[i]);
-            add.appendChild(text);
-            alert(name)
+            text += info[i] + "</li>";
             alert(text)
-            document.getElementById(name).appendChild(add);
         }
     }
     </script>

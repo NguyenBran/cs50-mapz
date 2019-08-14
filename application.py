@@ -58,7 +58,6 @@ def display():
         hotel = pointOfInterest(location, "hotel", 4)
 
         info = {
-            "location": location,
             "food": food,
             "dessert": dessert,
             "gas": gas,
