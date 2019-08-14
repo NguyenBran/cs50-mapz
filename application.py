@@ -50,29 +50,44 @@ def index():
 @app.route("/display", methods=["GET"])
 @login_required
 def display():
-    if request.method == 'GET':
-        location = reverseGeo(request.args.get("location"))
-        food = pointOfInterest(location, "restaurant", 4)
-        dessert = pointOfInterest(location, "dessert", 4)
-        gas = pointOfInterest(location, "gas", 4)
-        hotel = pointOfInterest(location, "hotel", 4)
+    location = reverseGeo(request.args.get("location"))
+    food = pointOfInterest(location, "restaurant", 4)
+    dessert = pointOfInterest(location, "dessert", 4)
+    gas = pointOfInterest(location, "gas", 4)
+    hotel = pointOfInterest(location, "hotel", 4)
 
-        info = {
-            "food": food,
-            "dessert": dessert,
-            "gas": gas,
-            "hotel": hotel
-        }
+    info = {
+        "food": food,
+        "dessert": dessert,
+        "gas": gas,
+        "hotel": hotel
+    }
 
-        return jsonify(info)
-
-    return jsonify(location)
+    return jsonify(info)
 
 @app.route("/update", methods=["GET"])
 @login_required
 def update():
-    if request.method == "GET":
-        return "woah"
+    start = reverseGeo(request.args.get("location"))
+    end = request.args.get("destination")
+    info = {}
+
+    info["route"] = directions([start, end])
+    time = totalTime([start, end])
+    temp = ""
+    if (time // 3600) > 0:
+        temp += str(time // 3600) + " hours "
+        time %= 3600
+    if (time // 60) > 0:
+        temp += str(time // 60) + " minutes "
+        time %= 60
+    temp += str(time) + " seconds"
+    info["time"] = temp
+    info["distance"] = totalDistance([start, end])
+
+    return jsonify(info)
+
+
 
 
 @app.route("/history")

@@ -55,7 +55,7 @@
                     var latitude = position.coords.latitude;
                     var longitude = position.coords.longitude;
                     $.get("/update?location=" + latitude + "," + longitude + "destination=" + $("h4").text(), function(result) {
-                        alert($("h4").text())
+                        alert(result)
                     });
                 });
             }
