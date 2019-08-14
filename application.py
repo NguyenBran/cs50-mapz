@@ -72,6 +72,7 @@ def display():
 @login_required
 def update():
     if request.method == "GET":
+        return "woah"
 
 
 @app.route("/history")
