@@ -68,6 +68,12 @@ def display():
 
     return jsonify(location)
 
+@app.route("/update", methods=["GET"])
+@login_required
+def update():
+    if request.method == "GET":
+
+
 @app.route("/history")
 @login_required
 def history():
@@ -148,7 +154,7 @@ def route():
     if request.method == "POST":
         return apology("TODO")
     else:
-        return apology("TODO")
+        return render_template("route.html")
 
 @app.route("/check", methods=["GET"])
 def check():
