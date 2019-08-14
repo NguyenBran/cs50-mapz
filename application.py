@@ -43,7 +43,6 @@ db = SQL("postgres://quodhnxqekaccr:42ed38983413e6617acb3c2c55aad545f91166bd886c
 @login_required
 def index():
     """Homepage, show few of history, suggestions of things (gas, food, hotels)"""
-
     return render_template("index.html")
 
 
@@ -88,8 +87,6 @@ def update():
     return jsonify(info)
 
 
-
-
 @app.route("/history")
 @login_required
 def history():
@@ -117,19 +114,23 @@ def route():
         info = {}
         info["directions"] = directions([start_address, end_address])
         time = totalTime([start_address, end_address])
-        temp = ""
-        if (time // 3600) > 0:
-            temp += str(time // 3600) + " hours "
-            time %= 3600
-        if (time // 60) > 0:
-            temp += str(time // 60) + " minutes "
-            time %= 60
+        temp = time
+        text = ""
+        if (temp // 3600) > 0:
+            text += str(temp // 3600) + " hours "
+            temp %= 3600
+        if (temp // 60) > 0:
+            text += str(temp // 60) + " minutes "
+            temp %= 60
 
-        temp += str(time) + " seconds"
+        text += str(temp) + " seconds"
 
         info["time"] = temp
         info["distance"] = totalDistance([start_address, end_address])
         info["destination"] = end_address
+
+        db.execute("INSERT INTO routes(id, start, end, distance, time) VALUES(:user, :start, :end, :distance, :time)",
+                   user=session["user_id"], start=start_address, end=end_address, distance=info["distance"], time=time)
 
         return render_template("route.html", info=info)
 
@@ -158,6 +159,8 @@ def near():
             return apology("Please enter in a positve number of searches")
 
         options = pointOfInterest(start_address, request.form.get("search"), int(request.form.get("number")))
+        db.execute("INSERT INTO search(id, start, search, results) VALUES(:user, :start, :search, :results)",
+                   user=session["user_id"], start=start_address, search=request.form.get("search"), results=options)
 
         return render_template("near.html", options=options, search=request.form.get("search").capitalize())
     else:
