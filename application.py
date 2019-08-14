@@ -114,6 +114,7 @@ def route():
 
         info["time"] = temp
         info["distance"] = totalDistance([start_address, end_address])
+        info["destination"] = end_address
 
         return render_template("route.html", info=info)
 

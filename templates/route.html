@@ -13,18 +13,20 @@
                 <div class="col-sm-8">
                     <h2>Directions!</h2>
                     {% for nav in info["directions"] %}
-                        <ul>
+                        <ul id="route">
                             <li><strong>{{ nav[0] }}</strong> for <strong>{{ nav[1] }}</strong> miles</li>
                         </ul>
                     {% endfor %}
+                    <h4>{{ info["destination"] }}</h4>
                 </div>
                 <div class="col-sm-4">
                     <h2>Total Time!</h2>
-                    <p>{{ info["time"] }}</p><br>
+                    <p id="time">{{ info["time"] }}</p><br>
                     <h2>Total Distance!</h2>
-                    <p>{{ info["distance"] }} miles to the destination!</p><br>
+                    <p id="distance">{{ info["distance"] }} miles to the destination!</p><br>
                 </div>
             </div>
+            <button class="btn btn-primary" id="myBtn">Click for Information!</button>
         </div>
     {% else %}
         <form action="/route" method="post" name="myForm">
@@ -45,4 +47,19 @@
             <button class="btn btn-primary" type="submit">Route!</button>
         </form>
     {% endif %}
+    <script>
+    $(document).ready(function(){
+        document.getElementById("myBtn").addEventListener("click", function(event){
+            if (navigator.geolocation){
+                navigator.geolocation.getCurrentPosition(function(position){
+                    var latitude = position.coords.latitude;
+                    var longitude = position.coords.longitude;
+                    $.get("/update?location=" + latitude + "," + longitude + "destination=" + $("h4").text(), function(result) {
+                        alert($("h4").text())
+                    });
+                });
+            }
+        });
+    });
+    </script>
 {% endblock %}
