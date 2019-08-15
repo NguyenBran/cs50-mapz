@@ -15,10 +15,6 @@ from helpers import apology, buildDirections, getResults, totalDistance, totalTi
 # Configure application
 app = Flask(__name__)
 
-# test
-port = int(os.environ.get("PORT", 5000))
-#app.run(debug=True, host='0.0.0.0', port=port)
-
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 
@@ -159,8 +155,8 @@ def near():
             return apology("Please enter in a positve number of searches")
 
         options = pointOfInterest(start_address, request.form.get("search"), int(request.form.get("number")))
-        db.executemany("""INSERT INTO search(id, start, search, results) VALUES(:user, :start, :search, :results)""",
-                       user=session["user_id"], start=start_address, search=request.form.get("search"), results=" ".join(options))
+        db.execute("INSERT INTO search(id, start, search, results) VALUES(:user, :start, :search, :results)",
+                   (user=session["user_id"], start=start_address, search=request.form.get("search"), results=" ".join(options)))
 
         return render_template("near.html", options=options, search=request.form.get("search").capitalize())
     else:
