@@ -125,7 +125,7 @@ def route():
         info["distance"] = totalDistance([start_address, end_address])
         info["destination"] = end_address
 
-        db.execute("INSERT INTO routes(id, start, end, distance, time) VALUES(':user', :start, :end, ':distance', ':time')",
+        db.execute("""INSERT INTO routes(id, start, end, distance, time) VALUES(:user, :start, :end, :distance, :time)""",
                    user=session["user_id"], start=start_address, end=end_address, distance=info["distance"], time=time)
 
         return render_template("route.html", info=info)
@@ -155,8 +155,8 @@ def near():
             return apology("Please enter in a positve number of searches")
 
         options = pointOfInterest(start_address, request.form.get("search"), int(request.form.get("number")))
-        db.execute("INSERT INTO search(id, start, search, results) VALUES(':user', :start, :search, :results)",
-                   user=session["user_id"], start=start_address, search=request.form.get("search"), results=" ".join(options))
+        #db.execute("INSERT INTO search(id, start, search, results) VALUES(:user, :start, :search, :results)",
+         #          user=session["user_id"], start=start_address, search=request.form.get("search"), results=" ".join(options))
 
         return render_template("near.html", options=options, search=request.form.get("search").capitalize())
     else:
