@@ -121,7 +121,7 @@ def route():
 
         text += str(temp) + " seconds"
 
-        info["time"] = temp
+        info["time"] = text
         info["distance"] = totalDistance([start_address, end_address])
         info["destination"] = end_address
 

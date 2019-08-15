@@ -60,10 +60,13 @@
                             text += "<li>" +info[i] + "</li>";
                         }
                         $("ul[id='route']").html(text);
+                        alert(text)
 
                         $("p[id='time']").html(result["time"]);
+                        alert(result["time"])
 
                         $("p[id='distance']").html(result("distance") + " miles to the destination!");
+                        alert(result("distance"))
                     });
                 });
             }
