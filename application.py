@@ -125,8 +125,8 @@ def route():
         info["distance"] = totalDistance([start_address, end_address])
         info["destination"] = end_address
 
-        db.execute("""INSERT INTO routes(id, start, end, distance, time) VALUES(:user, :start, :end, :distance, :time)""",
-                   user=session["user_id"], start=start_address, end=end_address, distance=info["distance"], time=time)
+        #db.execute("""INSERT INTO routes(id, start, end, distance, time) VALUES(:user, :start, :end, :distance, :time)""",
+         #          user=session["user_id"], start=start_address, end=end_address, distance=info["distance"], time=time)
 
         return render_template("route.html", info=info)
 
