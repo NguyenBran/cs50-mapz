@@ -8,7 +8,6 @@ from flask_session import Session
 from tempfile import mkdtemp
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 from werkzeug.security import check_password_hash, generate_password_hash
-import psycopg2
 
 from helpers import apology, buildDirections, getResults, totalDistance, totalTime, directions, getCoords, buildSearch, pointOfInterest, reverseGeo, login_required
 
@@ -126,9 +125,8 @@ def route():
         info["distance"] = totalDistance([start_address, end_address])
         info["destination"] = end_address
 
-        db.execute("INSERT INTO routes VALUES(:user, :start, :end, :distance, :time) RETURNING id",
+        db.execute("INSERT INTO routes VALUES(:user, :start, :end, :distance, :time) SELECT CURRVAL('users_id_seq')",
                    user=session["user_id"], start=start_address, end=end_address, distance=info["distance"], time=time)
-        db.execute("SELECT CURRVAL('users_id_seq')")
 
         return render_template("route.html", info=info)
 
