@@ -55,7 +55,9 @@
                     var latitude = position.coords.latitude;
                     var longitude = position.coords.longitude;
                     $.get("/update?location=" + latitude + "," + longitude + "&destination=" + $("h4").text(), function(result) {
-                        alert("here")
+                        alert(result["route"])
+                        alert(result["time"])
+                        alert(result["distance"])
                         var text = "";
                         for (i = 0; i < result["route"].length; i++){
                             text += "<li>" +info[i] + "</li>";
