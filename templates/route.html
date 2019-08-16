@@ -12,11 +12,11 @@
             <div class="row">
                 <div class="col-sm-8">
                     <h2>Directions!</h2>
+                    <ul id="route">
                     {% for nav in info["directions"] %}
-                        <ul id="route">
-                            <li><strong>{{ nav[0] }}</strong> for <strong>{{ nav[1] }}</strong> miles</li>
-                        </ul>
+                        <li><strong>{{ nav[0] }}</strong> for <strong>{{ nav[1] }}</strong> miles</li>
                     {% endfor %}
+                    </ul>
                     <h4>{{ info["destination"] }}</h4>
                 </div>
                 <div class="col-sm-4">
