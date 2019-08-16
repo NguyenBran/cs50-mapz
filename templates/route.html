@@ -60,12 +60,12 @@
                         alert(result["distance"])
                         var text = "";
                         for (i = 0; i < result["route"].length; i++){
-                            text += "<li>" +info[i] + "</li>";
+                            text += "<li>" + info[i] + "</li>";
                         }
-                        $("ul[id='route']").html(text);
+                        document.getElementById("route").innerHTML = text;
                         alert(text)
 
-                        $("p[id='time']").html(result["time"]);
+                        document.getElementById("time").innerHTML = result["time"];
                         alert(result["time"])
 
                         $("p[id='distance']").html(result("distance") + " miles to the destination!");
