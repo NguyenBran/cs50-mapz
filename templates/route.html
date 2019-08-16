@@ -60,8 +60,8 @@
                         alert(result["distance"])
                         var text = "";
                         for (var i = 0; i < result["route"].length; i++){
-                            alert("i: " + i)
-                            text += "<li><strong>" + result["route"][i][0] + "</strong> for <strong>" + result["route"][i][0] + "</strong> miles</li>";
+                            alert(result["route"][i])
+                            text += "<li><strong>" + result["route"][i][0] + "</strong> for <strong>" + result["route"][i][1] + "</strong> miles</li>";
                         }
 
                         $("ul[id='route']").html(text);
