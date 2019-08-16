@@ -61,7 +61,7 @@
                         var text = "";
                         for (var i = 0; i < result["route"].length; i++){
                             alert("i: " + i)
-                            text += "<li>" + info[i] + "</li>";
+                            text += "<li>" + result["route"][i] + "</li>";
                         }
                         alert("here")
                         document.getElementById("route").innerHTML = text;
