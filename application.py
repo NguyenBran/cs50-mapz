@@ -301,7 +301,7 @@ def buildInfo(start, end):
 
     info["time"] = text
     info["distance"] = totalDistance([start, end])
-    info["destination"] = end_address
+    info["destination"] = end
 
     return info
 
