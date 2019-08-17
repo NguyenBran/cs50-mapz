@@ -56,16 +56,15 @@
                     var longitude = position.coords.longitude;
                     $.get("/update?location=" + latitude + "," + longitude + "&destination=" + $("h4").text(), function(result) {
                         var text = "";
-                        for (var i = 0; i < result["route"].length; i++){
-                            text += "<li><strong>" + result["route"][i][0] + "</strong> for <strong>" + result["route"][i][1] + "</strong> miles</li>";
+                        for (var i = 0; i < result["directions"].length; i++){
+                            text += "<li><strong>" + result["directions"][i][0] + "</strong> for <strong>" + result["directions"][i][1] + "</strong> miles</li>";
                         }
 
-                        alert("here")
                         $("ul[id='route']").html(text);
 
                         $("p[id='time']").html(result["time"]);
 
-                        $("p[id='distance']").html(result("distance") + " miles to the destination!");
+                        $("p[id='distance']").html(result["distance"] + " miles to the destination!");
                     });
                 });
             }
