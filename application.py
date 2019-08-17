@@ -64,21 +64,8 @@ def display():
 def update():
     start = reverseGeo(request.args.get("location"))
     end = request.args.get("destination")
-    info = {}
 
-    info["route"] = directions([start, end])
-    time = totalTime([start, end])
-    temp = ""
-    if (time // 3600) > 0:
-        temp += str(time // 3600) + " hours "
-        time %= 3600
-    if (time // 60) > 0:
-        temp += str(time // 60) + " minutes "
-        time %= 60
-    temp += str(time) + " seconds"
-    info["time"] = temp
-    info["distance"] = totalDistance([start, end])
-    print(info)
+    info = buildInfo(start_address, end_address)
 
     return jsonify(info)
 
@@ -107,26 +94,11 @@ def route():
         else:
             return apology("Please enter a destination.")
 
-        info = {}
-        info["directions"] = directions([start_address, end_address])
-        time = totalTime([start_address, end_address])
-        temp = time
-        text = ""
-        if (temp // 3600) > 0:
-            text += str(temp // 3600) + " hours "
-            temp %= 3600
-        if (temp // 60) > 0:
-            text += str(temp // 60) + " minutes "
-            temp %= 60
+        info = buildInfo(start_address, end_address)
 
-        text += str(temp) + " seconds"
 
-        info["time"] = text
-        info["distance"] = totalDistance([start_address, end_address])
-        info["destination"] = end_address
-
-        db.execute("INSERT INTO routes VALUES(:user, :start, :end, :distance, :time)",
-                   user=session["user_id"], start=start_address, end=end_address, distance=info["distance"], time=time)
+        #db.execute("INSERT INTO routes VALUES(:user, :start, :end, :distance, :time)",
+                     #user=session["user_id"], start=start_address, end=end_address, distance=info["distance"], time=time)
 
         return render_template("route.html", info=info)
 
@@ -155,8 +127,8 @@ def near():
             return apology("Please enter in a positve number of searches")
 
         options = pointOfInterest(start_address, request.form.get("search"), int(request.form.get("number")))
-        db.execute("INSERT INTO search(id, start, search, results) VALUES(:user, :start, :search, :results)",
-                   user=session["user_id"], start=start_address, search=request.form.get("search"), results=" ".join(options))
+        #db.execute("INSERT INTO search(id, start, search, results) VALUES(:user, :start, :search, :results)",
+         #          user=session["user_id"], start=start_address, search=request.form.get("search"), results=" ".join(options))
 
         return render_template("near.html", options=options, search=request.form.get("search").capitalize())
     else:
@@ -311,6 +283,28 @@ def errorhandler(e):
 # Listen for errors
 for code in default_exceptions:
     app.errorhandler(code)(errorhandler)
+
+def buildInfo(start, end):
+    info = {}
+    info["directions"] = directions([start, end])
+    time = totalTime([start, end])
+    temp = time
+    text = ""
+    if (temp // 3600) > 0:
+        text += str(temp // 3600) + " hours "
+        temp %= 3600
+    if (temp // 60) > 0:
+        text += str(temp // 60) + " minutes "
+        temp %= 60
+
+    text += str(temp) + " seconds"
+
+    info["time"] = text
+    info["distance"] = totalDistance([start, end])
+    info["destination"] = end_address
+
+    return info
+
 
 
 if __name__ == "__main__":
