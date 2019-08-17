@@ -65,7 +65,7 @@ def update():
     start = reverseGeo(request.args.get("location"))
     end = request.args.get("destination")
 
-    info = buildInfo(start_address, end_address)
+    info = buildInfo(start, end)
 
     return jsonify(info)
 
