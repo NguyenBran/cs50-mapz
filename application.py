@@ -38,7 +38,7 @@ db = SQL("postgres://quodhnxqekaccr:42ed38983413e6617acb3c2c55aad545f91166bd886c
 @login_required
 def index():
     """Homepage, show few of history, suggestions of things (gas, food, hotels)"""
-    db.execute("ALTER SEQUENCE id")
+    db.execute("ALTER SEQUENCE id WITH :session", session=session["user_id"])
     return render_template("index.html")
 
 
