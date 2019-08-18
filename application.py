@@ -98,7 +98,7 @@ def route():
 
 
         #db.execute("INSERT INTO routes VALUES(:user, :start, :end, :distance, :time)",
-                     #user=session["user_id"], start=start_address, end=end_address, distance=info["distance"], time=time)
+                     #user=session["username"], start=start_address, end=end_address, distance=info["distance"], time=time)
 
         return render_template("route.html", info=info)
 
@@ -127,8 +127,8 @@ def near():
             return apology("Please enter in a positve number of searches")
 
         options = pointOfInterest(start_address, request.form.get("search"), int(request.form.get("number")))
-        db.execute("INSERT INTO search(id, start, search, results) VALUES(:user, :start, :search, :results) RETURNING :user2",
-                   user=session["user_id"], start=start_address, search=request.form.get("search"), results=" ".join(options), user2=session["user_id"])
+        db.execute("INSERT INTO search(username, start, search, results) VALUES(:user, :start, :search, :results)",
+                   user=session["username"], start=start_address, search=request.form.get("search"), results=" ".join(options))
 
         return render_template("near.html", options=options, search=request.form.get("search").capitalize())
     else:
@@ -156,7 +156,7 @@ def check():
 def login():
     """Log user in"""
 
-    # Forget any user_id
+    # Forget any username
     session.clear()
 
     # User reached route via POST (as by submitting a form via POST)
@@ -179,9 +179,7 @@ def login():
             return apology("invalid username and/or password", 403)
 
         # Remember which user has logged in
-        session["user_id"] = rows[0]["id"]
-
-        db.execute("ALTER SEQUENCE users_id_seq RESTART WITH :user", user=session["user_id"])
+        session["username"] = rows[0]["username"]
 
         # Redirect user to home page
         return redirect("/")
@@ -195,7 +193,7 @@ def login():
 def logout():
     """Log user out"""
 
-    # Forget any user_id
+    # Forget any username
     session.clear()
 
     # Redirect user to login form
@@ -231,7 +229,7 @@ def register():
                    username=username, hashed=generate_password_hash(password))
 
         # Saves the session of the user and logs them into the account
-        session["user_id"] = db.execute("SELECT id FROM users WHERE :username = username", username=username)[0]["id"]
+        session["username"] = db.execute("SELECT username FROM users WHERE :username = username", username=username)[0]["username"]
 
         return redirect("/")
     else:
@@ -249,7 +247,7 @@ def change():
         old_pass = request.form.get("old_pass")
 
         # Gets the old password hash value
-        old = db.execute("SELECT hash FROM users WHERE id = :user", user=session["user_id"])
+        old = db.execute("SELECT hash FROM users WHERE username = :user", user=session["username"])
 
         # Checks to see if the old password was entered and if the password in the database and entered password match
         if not old_pass:
@@ -266,8 +264,8 @@ def change():
             return apology("The passwords do not match.")
 
         # Updates the hash value with the new password's hash value
-        db.execute("UPDATE users SET hash = :new_pass WHERE id = :user",
-                   new_pass=generate_password_hash(new_pass), user=session["user_id"])
+        db.execute("UPDATE users SET hash = :new_pass WHERE username = :user",
+                   new_pass=generate_password_hash(new_pass), user=session["username"])
 
         return redirect("/")
     else:
