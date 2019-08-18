@@ -181,7 +181,7 @@ def login():
         # Remember which user has logged in
         session["user_id"] = rows[0]["id"]
 
-        db.execute("SELECT setval('users_id_seq', :user, true)", user=session["user_id"])
+        db.execute("ALTER SEQUENCE users_id_seq RESTART WITH :user", user=session["user_id"])
 
         # Redirect user to home page
         return redirect("/")
