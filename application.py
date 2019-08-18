@@ -127,8 +127,8 @@ def near():
             return apology("Please enter in a positve number of searches")
 
         options = pointOfInterest(start_address, request.form.get("search"), int(request.form.get("number")))
-        #db.execute("INSERT INTO search(id, start, search, results) VALUES(:user, :start, :search, :results)",
-         #          user=session["user_id"], start=start_address, search=request.form.get("search"), results=" ".join(options))
+        db.execute("INSERT INTO search(id, start, search, results) VALUES(:user, :start, :search, :results) RETURNING :user2",
+                   user=session["user_id"], start=start_address, search=request.form.get("search"), results=" ".join(options), user2=session["user_id"])
 
         return render_template("near.html", options=options, search=request.form.get("search").capitalize())
     else:
@@ -304,7 +304,6 @@ def buildInfo(start, end):
     info["destination"] = end
 
     return info
-
 
 
 if __name__ == "__main__":
