@@ -224,11 +224,11 @@ def register():
         elif password != confirm:
             return apology("Passwords don't match.")
 
+        session["user_id"] = db.execute("SELECT id FROM users WHERE :username = username", username=username)[0]["id"]
+
         # Inserts the user into the database
         db.execute("INSERT INTO users(id, username, hash) VALUES(:user, :username, :hashed)",
                    user=session["user_id"], username=username, hashed=generate_password_hash(password))
-
-        session["user_id"] = db.execute("SELECT id FROM users WHERE :username = username", username=username)[0]["id"]
 
         return redirect("/")
     else:
