@@ -205,7 +205,7 @@ def login():
 def logout():
     """Log user out"""
 
-    db.execute("SELECT setval(id, lastval() - 1) FROM users")
+    db.execute("SELECT SETVAL('id', lastval()) FROM users")
 
     # Forget any username
     session.clear()
