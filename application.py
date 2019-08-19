@@ -96,8 +96,6 @@ def route():
 
         info = buildInfo(start_address, end_address)
 
-        db.execute("SELECT setval(users_id_seq, coalesce(max(id), 1), max(id) IS NOT null) FROM users")
-
         db.execute("INSERT INTO routes VALUES(:user, :start, :end, :distance, :time)",
                      user=session["user_id"], start=start_address, end=end_address, distance=info["distance"], time=totalTime([start_address, end_address]))
 
@@ -128,8 +126,6 @@ def near():
             return apology("Please enter in a positve number of searches")
 
         options = pointOfInterest(start_address, request.form.get("search"), int(request.form.get("number")))
-
-        db.execute("SELECT NEXTVAL('users_id_seq') as :user", user=session["user_id"])
 
         db.execute("INSERT INTO search VALUES(:user, :start, :search, :results)",
                    user=session["user_id"], start=start_address, search=request.form.get("search"), results=" ".join(options))
