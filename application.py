@@ -77,6 +77,8 @@ def history():
     name = db.execute("SELECT username FROM users WHERE id = :user", user=session["user_id"])[0]["username"]
     searches = db.execute("SELECT * FROM search WHERE id = :user", user=session["user_id"])
     routes = db.execute("SELECT * FROM routes WHERE id = :user", user=session["user_id"])
+    for search in searches:
+        route["results"] = route["results"].split("<>")
     return render_template("history.html", searches=searches, routes=routes, name=name)
 
 

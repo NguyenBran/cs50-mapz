@@ -46,7 +46,13 @@
                     <tr>
                         <td>{{ search["start"] }}</td>
                         <td>{{ search["search"] }}</td>
-                        <td>{{ search["results"] }}</td>
+                        <td>
+                            <ul>
+                                {% for result in search["results"] %}
+                                    <li>{{ result }}</li>
+                                {% endfor %}
+                            </ul>
+                        </td>
                         <td>{{ search["datetime"] }}</td>
                     </tr>
                 {% endfor %}
