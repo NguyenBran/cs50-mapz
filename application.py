@@ -98,7 +98,7 @@ def route():
 
 
         db.execute("INSERT INTO routes VALUES(:user, :start, :end, :distance, :time)",
-                     user=session["user_id"], start=start_address, end=end_address, distance=info["distance"], time=time)
+                     user=session["user_id"], start=start_address, end=end_address, distance=info["distance"], time=totalTime([start_address, end_address]))
 
         return render_template("route.html", info=info)
 
@@ -127,6 +127,7 @@ def near():
             return apology("Please enter in a positve number of searches")
 
         options = pointOfInterest(start_address, request.form.get("search"), int(request.form.get("number")))
+
         db.execute("INSERT INTO search VALUES(:user, :start, :search, :results)",
                    user=session["user_id"], start=start_address, search=request.form.get("search"), results=" ".join(options))
 
@@ -147,6 +148,7 @@ def check():
 
     # Checks to see if the username is already registered
     list_users = db.execute("SELECT username FROM users WHERE username = :username", username=username)
+
     if list_users:
         return jsonify(False)
 
@@ -227,8 +229,6 @@ def register():
         # Inserts the user into the database
         db.execute("INSERT INTO users(username, hash) VALUES(:username, :hashed)",
                    username=username, hashed=generate_password_hash(password))
-
-        session["user_id"] = db.execute("SELECT id FROM users WHERE :username = username", username=username)[0]["id"]
 
         return redirect("/")
     else:
