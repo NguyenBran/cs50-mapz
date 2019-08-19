@@ -181,6 +181,10 @@ def login():
 
         # Remember which user has logged in
         session["user_id"] = rows[0]["id"]
+        val = db.execute("SELECT id FROM users")
+        return apology(val)
+
+        #session["max_val"] =
 
         # Redirect user to home page
         return redirect("/")
