@@ -75,9 +75,9 @@ def update():
 def history():
     """Show history of Travel Destinations"""
     name = db.execute("SELECT username FROM users WHERE id = :user", user=session["user_id"])[0]["username"]
-    search = db.execute("SELECT * FROM search WHERE id = :user", user=session["user_id"])
+    searches = db.execute("SELECT * FROM search WHERE id = :user", user=session["user_id"])
     routes = db.execute("SELECT * FROM routes WHERE id = :user", user=session["user_id"])
-    return render_template("history.html", search=search, routes=routes, name=name)
+    return render_template("history.html", searches=searches, routes=routes, name=name)
 
 
 @app.route("/route", methods=["GET", "POST"])

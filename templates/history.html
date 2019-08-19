@@ -9,10 +9,51 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-6">
-                <h4>{{ routes }}</h4>
+                <table class="table">
+                <h3>Route History</h3>
+                <thead>
+                    <tr>
+                        <th scope="col">Starting Location</th>
+                        <th scope="col">Destination</th>
+                        <th scope="col">Distance</th>
+                        <th scope="col">Time</th>
+                        <th scope="col">When Routed</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for route in routes %}
+                        <tr>
+                            <td>{{ route["start"] }}</td>
+                            <td>{{ route["end"] }}</td>
+                            <td>{{ route["distance"] }}</td>
+                            <td>{{ route["time"] }}</td>
+                            <td>{{ route["date"] }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+        </table>
             </div>
             <div class="col-sm-6">
-                <h4>{{ search }}</h4>
+                <table class="table">
+                <h3>Search History</h3>
+                <thead>
+                    <tr>
+                        <th scope="col">Starting Location</th>
+                        <th scope="col">Type of Search</th>
+                        <th scope="col">Results</th>
+                        <th scope="col">When Searched</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for search in searches %}
+                        <tr>
+                            <td>{{ search["start"] }}</td>
+                            <td>{{ search["search"] }}</td>
+                            <td>{{ search["results"] }}</td>
+                            <td>{{ search["datetime"] }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
             </div>
         </div>
     </div>
