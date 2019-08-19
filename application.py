@@ -182,7 +182,7 @@ def login():
         # Remember which user has logged in
         session["user_id"] = rows[0]["id"]
         val = db.execute("SELECT id FROM users")
-        return apology(val)
+        return apology(max(val))
 
         #session["max_val"] =
 
