@@ -186,9 +186,7 @@ def login():
         for row in val:
             temp.append(row["id"])
 
-        session["max_val"] = max(temp)
-
-        db.execute("SELECT setval('users_id_seq', :user)", user=session["user_id"])
+        db.execute("SELECT nextval('users_id_seq')")
 
         # Redirect user to home page
         return redirect("/")
@@ -201,8 +199,6 @@ def login():
 @app.route("/logout")
 def logout():
     """Log user out"""
-
-    db.execute("SELECT setval('users_id_seq', :user)", user=session["max_val"])
 
     # Forget any username
     session.clear()
