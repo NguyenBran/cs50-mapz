@@ -200,9 +200,6 @@ def login():
 @app.route("/logout")
 def logout():
     """Log user out"""
-
-    db.execute("SELECT SETVAL('users_id_seq', lastval()) FROM users")
-
     # Forget any username
     session.clear()
 
