@@ -96,8 +96,8 @@ def route():
     if request.method == "POST":
 
         # Checks to see if all of the fields for the starting address were filled
-        if request.form.get("start"):
-            start_address = request.form.get("start")
+        if (request.form.get("start_street") and request.form.get("start_city") and request.form.get("start_state")):
+            start_address = request.form.get("start_street") + "," + request.form.get("start_city") + "," + request.form.get("start_state")
 
         # Checks to see if the user wanted to use their current location instead
         elif request.form.get("current"):
@@ -106,8 +106,8 @@ def route():
             return apology("You do not have a starting location")
 
         # Checks to see if all of the fields for the end address were filled in
-        if request.form.get("end"):
-            end_address = request.form.get("end")
+        if (request.form.get("end_street") and request.form.get("end_city") and request.form.get("end_state")):
+            end_address = request.form.get("end_street") + "," + request.form.get("end_city") + "," + request.form.get("end_state")
         else:
             return apology("Please enter a destination.")
 
@@ -129,8 +129,8 @@ def route():
 def near():
     """Find Places Nearby"""
     if request.method == "POST":
-        if request.form.get("start"):
-            start_address = request.form.get("start")
+        if (request.form.get("start_street") and request.form.get("start_city") and request.form.get("start_state")):
+            start_address = request.form.get("start_street") + "," + request.form.get("start_city") + "," + request.form.get("start_state")
         elif request.form["current"]:
             start_address = reverseGeo(request.form.get("current"))
         else:

@@ -112,8 +112,10 @@ def directions(locations : list) -> list:
 
     for i in range(1, len(locations)):
         results = buildDirections(start, locations[i])
-
+        print(results)
         for legs in results['route']['legs']:
+            print("here")
+            print(legs)
             for nav in legs['maneuvers']:
                 navigation.append((nav['narrative'], nav["distance"]))
         start = locations[i]
@@ -202,4 +204,4 @@ def login_required(f):
     return decorated_function
 
 
-print(directions(["1119 Magnolia Ave", "979 Broadway"]))
+print(directions(["1119 Magnolia Ave, Millbrae, CA", "451 S Airport Blvd, South San Francisco, CA"]))
