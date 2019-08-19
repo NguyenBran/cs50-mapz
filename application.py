@@ -230,6 +230,10 @@ def register():
         db.execute("INSERT INTO users(username, hash) VALUES(:username, :hashed)",
                    username=username, hashed=generate_password_hash(password))
 
+        session["user_id"] = db.execute("SELECT id FROM users WHERE :username = username", username=username)[0]["id"]
+
+        db.execute("SELECT NEXTVAL('users_id_seq') as :user", user=session["user_id"])
+
         return redirect("/")
     else:
         return render_template("register.html")
