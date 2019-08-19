@@ -96,7 +96,7 @@ def route():
 
         info = buildInfo(start_address, end_address)
 
-        db.execute("SELECT setval(users_id_seq, coalesce(max(id), 1), max(id) IS NOT null) FROM users_id")
+        db.execute("SELECT setval(users_id_seq, coalesce(max(id), 1), max(id) IS NOT null) FROM users")
 
         db.execute("INSERT INTO routes VALUES(:user, :start, :end, :distance, :time)",
                      user=session["user_id"], start=start_address, end=end_address, distance=info["distance"], time=totalTime([start_address, end_address]))
