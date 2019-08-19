@@ -186,10 +186,6 @@ def login():
 
         # Remember which user has logged in
         session["user_id"] = rows[0]["id"]
-        val = db.execute("SELECT id FROM users")
-        temp = []
-        for row in val:
-            temp.append(row["id"])
 
         db.execute("SELECT nextval('users_id_seq')")
 
@@ -205,7 +201,7 @@ def login():
 def logout():
     """Log user out"""
 
-    db.execute("SELECT SETVAL('users_id_seq', lastval() - 1) FROM users")
+    db.execute("SELECT SETVAL('users_id_seq', lastval()) FROM users")
 
     # Forget any username
     session.clear()
