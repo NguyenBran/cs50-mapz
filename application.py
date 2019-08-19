@@ -35,19 +35,21 @@ db = SQL("postgres://quodhnxqekaccr:42ed38983413e6617acb3c2c55aad545f91166bd886c
 @app.route("/", methods=["GET"])
 @login_required
 def index():
-    """Homepage, show few of history, suggestions of things (gas, food, hotels)"""
+    """Homepage, suggestions of things (gas, food, hotels), with a form to route the user"""
     return render_template("index.html")
 
 
 @app.route("/display", methods=["GET"])
 @login_required
 def display():
+    # Gets the location of the user and then looks for food, dessert, gas, and hotels in the area
     location = reverseGeo(request.args.get("location"))
     food = pointOfInterest(location, "restaurant", 4)
     dessert = pointOfInterest(location, "dessert", 4)
     gas = pointOfInterest(location, "gas", 4)
     hotel = pointOfInterest(location, "hotel", 4)
 
+    # Stores the information in a dictionary that will be sent back
     info = {
         "food": food,
         "dessert": dessert,
@@ -60,9 +62,11 @@ def display():
 @app.route("/update", methods=["GET"])
 @login_required
 def update():
+    # Gets the current location of the user and their destination
     start = reverseGeo(request.args.get("location"))
     end = request.args.get("destination")
 
+    # Gathers information about the route and returns it back into the html file to be displayed
     info = buildInfo(start, end)
 
     return jsonify(info)
@@ -72,11 +76,16 @@ def update():
 @login_required
 def history():
     """Show history of Travel Destinations"""
+
+    # Gathers information about the users searches and routes from the database
     name = db.execute("SELECT username FROM users WHERE id = :user", user=session["user_id"])[0]["username"]
     searches = db.execute("SELECT * FROM search WHERE id = :user", user=session["user_id"])
     routes = db.execute("SELECT * FROM routes WHERE id = :user", user=session["user_id"])
+
+    # Turns the result of the searches into a list
     for search in searches:
         search["results"] = search["results"].split("<>")
+
     return render_template("history.html", searches=searches, routes=routes, name=name)
 
 
@@ -85,20 +94,27 @@ def history():
 def route():
     """Check information about destination first"""
     if request.method == "POST":
-        if (request.form.get("start_street") and request.form.get("start_city") and request.form.get("start_state")):
-            start_address = request.form.get("start_street") + "," + request.form.get("start_city") + "," + request.form.get("start_state")
+
+        # Checks to see if all of the fields for the starting address were filled
+        if request.form.get("start"):
+            start_address = request.form.get("start")
+
+        # Checks to see if the user wanted to use their current location instead
         elif request.form.get("current"):
             start_address = reverseGeo(request.form["current"])
         else:
             return apology("You do not have a starting location")
 
-        if (request.form.get("end_street") and request.form.get("end_city") and request.form.get("end_state")):
-            end_address = request.form.get("end_street") + "," + request.form.get("end_city") + "," + request.form.get("end_state")
+        # Checks to see if all of the fields for the end address were filled in
+        if request.form.get("end"):
+            end_address = request.form.get("end")
         else:
             return apology("Please enter a destination.")
 
+        # Gathers information about the route
         info = buildInfo(start_address, end_address)
 
+        # Inserts the information into the database to use for the history of the user
         db.execute("INSERT INTO routes VALUES(:user, :start, :end, :distance, :time)",
                      user=session["user_id"], start=start_address, end=end_address, distance=info["distance"], time=totalTime([start_address, end_address]))
 
@@ -113,8 +129,8 @@ def route():
 def near():
     """Find Places Nearby"""
     if request.method == "POST":
-        if (request.form.get("start_street") and request.form.get("start_city") and request.form.get("start_state")):
-            start_address = request.form.get("start_street") + "," + request.form.get("start_city") + "," + request.form.get("start_state")
+        if request.form.get("start"):
+            start_address = request.form.get("start")
         elif request.form["current"]:
             start_address = reverseGeo(request.form.get("current"))
         else:
