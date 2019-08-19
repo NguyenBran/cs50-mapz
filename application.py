@@ -1,6 +1,4 @@
 import os
-import datetime
-import time
 
 from cs50 import SQL
 from flask import Flask, flash, jsonify, redirect, render_template, request, session
@@ -253,7 +251,7 @@ def change():
         old_pass = request.form.get("old_pass")
 
         # Gets the old password hash value
-        old = db.execute("SELECT hash FROM users WHERE username = :user", user=session["user_id"])
+        old = db.execute("SELECT hash FROM users WHERE id = :user", user=session["user_id"])
 
         # Checks to see if the old password was entered and if the password in the database and entered password match
         if not old_pass:
