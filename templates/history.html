@@ -24,7 +24,15 @@
                         <td>{{ route["start"] }}</td>
                         <td>{{ route["end"] }}</td>
                         <td>{{ route["distance"] }}</td>
-                        <td>{{ route["time"] }}</td>
+                        {% if route["time"] > 3600 %}
+                        <td>{{ route["time"] // 3600 }} hours {{ (route["time"] % 3600) // 60 }} minutes {{ ((route["time"] % 3600) % 60) }} seconds</td>
+                        {% else %}
+                            {% if route["time"] > 60 %}
+                            <td>{{ (route["time"] % 3600) // 60 }} minutes {{ ((route["time"] % 3600) % 60) }} seconds</td>
+                            {% else %}
+                            <td>{{ route["time"] }} seconds</td>
+                            {% endif %}
+                        {% endif %}
                         <td>{{ route["date"] }}</td>
                     </tr>
                 {% endfor %}
