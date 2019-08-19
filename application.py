@@ -114,8 +114,7 @@ def near():
         if (request.form.get("start_street") and request.form.get("start_city") and request.form.get("start_state")):
             start_address = request.form.get("start_street") + "," + request.form.get("start_city") + "," + request.form.get("start_state")
         elif request.form["current"]:
-            return apology(request.form.get("current"))
-            start_address = reverseGeo(request.form["current"])
+            start_address = reverseGeo(request.form.get("current"))
         else:
             return apology("You do not have a starting location")
 
@@ -128,7 +127,7 @@ def near():
             return apology("Please enter in a positve number of searches")
 
         options = pointOfInterest(start_address, request.form.get("search"), int(request.form.get("number")))
-        db.execute("INSERT INTO search(id, start, search, results) VALUES(:user, :start, :search, :results)",
+        db.execute("INSERT INTO search VALUES(:user, :start, :search, :results)",
                    user=session["user_id"], start=start_address, search=request.form.get("search"), results=" ".join(options))
 
         return render_template("near.html", options=options, search=request.form.get("search").capitalize())
