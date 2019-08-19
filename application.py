@@ -74,7 +74,10 @@ def update():
 @login_required
 def history():
     """Show history of Travel Destinations"""
-    return apology("TODO")
+    name = db.execute("SELECT username FROM users WHERE id = :user", user=session["user_id"])[0]["username"]
+    search = db.execute("SELECT * FROM search WHERE id = :user", user=session["user_id"])
+    routes = db.execute("SELECT * FROM routes WHERE id = :user", user=session["user_id"])
+    return render_template("history.html", search=search, routes=routes, name=name)
 
 
 @app.route("/route", methods=["GET", "POST"])
