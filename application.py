@@ -131,7 +131,7 @@ def near():
         options = pointOfInterest(start_address, request.form.get("search"), int(request.form.get("number")))
 
         db.execute("INSERT INTO search VALUES(:user, :start, :search, :results)",
-                   user=session["user_id"], start=start_address, search=request.form.get("search"), results=" ".join(options))
+                   user=session["user_id"], start=start_address, search=request.form.get("search"), results=options)
 
         return render_template("near.html", options=options, search=request.form.get("search").capitalize())
     else:
