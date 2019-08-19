@@ -204,4 +204,4 @@ def login_required(f):
     return decorated_function
 
 
-print(directions(["1119 Magnolia Ave, Millbrae, CA", "451 S Airport Blvd, South San Francisco, CA"]))
+print(pointOfInterest("1119 Magnolia Ave, Millbrae, CA", "market", 3))

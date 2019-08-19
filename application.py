@@ -136,20 +136,22 @@ def near():
         else:
             return apology("You do not have a starting location")
 
-        if not request.form.get("search"):
-            return apology("Please enter what you want to search for.")
+        if request.form.get("search") == "other":
+            search = request.form.get("other")
+        else:
+            search=request.form.get("search")
 
         if not request.form.get("number"):
             return apology("Please enter in the number of results you want.")
         elif int(request.form.get("number")) < 1:
             return apology("Please enter in a positve number of searches")
 
-        options = pointOfInterest(start_address, request.form.get("search"), int(request.form.get("number")))
+        options = pointOfInterest(start_address, search, int(request.form.get("number")))
 
         db.execute("INSERT INTO search VALUES(:user, :start, :search, :results)",
-                   user=session["user_id"], start=start_address, search=request.form.get("search"), results="<>".join(options))
+                   user=session["user_id"], start=start_address, search=search, results="<>".join(options))
 
-        return render_template("near.html", options=options, search=request.form.get("search").capitalize())
+        return render_template("near.html", options=options, search=search.capitalize())
     else:
         return render_template("near.html")
 

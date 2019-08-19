@@ -24,7 +24,16 @@
                 <input class="form-control" name="start_state" placeholder="State" type="text">
             </div>
             <div class = "form-group">
-                <input class="form-control" name="search" placeholder="Type of Search" type="text">
+                <select name="search" class="form-control">
+                    <option disabled selected>Type of Search</option>
+                    <option value="gas">Gas</option>
+                    <option value="restaurant">Foods</option>
+                    <option value="dessert">Desserts</option>
+                    <option value="hotel">Hotels</option>
+                    <option value="market">Markets</option>
+                    <option value="other">Other</option>
+                </select>
+                <input class="form-control" name="other" placeholder="If other, fill in the blank" type="text">
                 <input class="form-control" name="number" placeholder="Number of Searches" type="number">
             </div>
             <button class="btn btn-primary" type="submit">Search!</button>
