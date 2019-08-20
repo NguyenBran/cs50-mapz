@@ -74,7 +74,7 @@
     function addList(info, name){
         var text = "";
         for (var i = 0; i < info.length; i++){
-            text += "<li><strong>" + info[i]["name"] + "</strong> " + info[i]["address"] + "</li>";
+            text += "<li><strong>" + info[i]["name"] + "</strong><br>" + info[i]["address"] + "</li>";
         }
         $("ul[name=" + name + "]").html(text);
     }
