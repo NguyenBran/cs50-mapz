@@ -87,7 +87,7 @@ def history():
 
     # Turns the result of the searches into a list
     for search in searches:
-        search["results"] = search["results"].split("||").replace("<>", " ")
+        search["results"] = search["results"].replace("<>", " ").split("||")
 
     return render_template("history.html", searches=searches, routes=routes, name=name)
 
