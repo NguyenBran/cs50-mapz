@@ -89,7 +89,7 @@ def history():
 
     for search in searches:
         temp = search["results"].replace("<>", ", ").split("||")
-        search["results"] = temp[:len(temp)]
+        search["results"] = temp[:-1]
 
     return render_template("history.html", searches=searches, routes=routes, name=name)
 
