@@ -45,7 +45,7 @@
             <input autofocus class="form-control" name="start_street" placeholder="Street" type="text">
             <input class="form-control" name="start_city" placeholder="City" type="text">
             <input class="form-control" name="start_state" placeholder="State" type="text">
-        </div>
+        </div><br><br>
         <h2>End</h2>
         <div class = "form-group">
             <input class="form-control" name="end_street" placeholder="Street" type="text">
@@ -74,7 +74,7 @@
     function addList(info, name){
         var text = "";
         for (var i = 0; i < info.length; i++){
-            text += "<li>" + info[i] + "</li>";
+            text += "<li><strong>" + info[i]["name"] + "</strong> " + info[i]["address"] + "</li>";
         }
         $("ul[name=" + name + "]").html(text);
     }
