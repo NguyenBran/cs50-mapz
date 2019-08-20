@@ -15,14 +15,15 @@
         </ul>
     {% else %}
         <form action="/near" method="post" name="myForm">
-            <h2>Location!</h2>
+            <h2>Start!</h2>
             <div class = "form-group">
                 <input class="form-check-input" name="current" type="checkbox" id="location">
                 <label class="form-check-label">Use Current Location?</label><br>
                 <input autofocus class="form-control" name="start_street" placeholder="Street" type="text">
                 <input class="form-control" name="start_city" placeholder="City" type="text">
                 <input class="form-control" name="start_state" placeholder="State" type="text">
-            </div>
+            </div><br><br>
+            <h2>Search Information!</h2>
             <div class = "form-group">
                 <select name="search" class="form-control">
                     <option disabled selected>Type of Search</option>

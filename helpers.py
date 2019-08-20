@@ -176,7 +176,13 @@ def pointOfInterest(locations : str, keyword : str, results : int) -> list:
     listLocations = []
 
     for place in searchDict["results"]:
-        listLocations.append(place["displayString"])
+        dictLocation = {}
+        location = place["displayString"].split(", ", 1)
+
+        dictLocation["name"] = location[0]
+        dictLocation["address"] = location[1]
+
+        listLocations.append(dictLocation)
 
     return listLocations
 

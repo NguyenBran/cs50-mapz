@@ -23,6 +23,7 @@ def after_request(response):
     response.headers["Pragma"] = "no-cache"
     return response
 
+
 # Configure session to use filesystem (instead of signed cookies)
 app.config["SESSION_FILE_DIR"] = mkdtemp()
 app.config["SESSION_PERMANENT"] = False
@@ -31,6 +32,7 @@ Session(app)
 
 # Configure CS50 Library to use Postgres database
 db = SQL("postgres://quodhnxqekaccr:42ed38983413e6617acb3c2c55aad545f91166bd886cecf39e646ff9d5f48de0@ec2-107-21-120-104.compute-1.amazonaws.com:5432/d221s270qddtro")
+
 
 @app.route("/", methods=["GET"])
 @login_required
@@ -58,6 +60,7 @@ def display():
     }
 
     return jsonify(info)
+
 
 @app.route("/update", methods=["GET"])
 @login_required
@@ -97,7 +100,8 @@ def route():
 
         # Checks to see if all of the fields for the starting address were filled
         if (request.form.get("start_street") and request.form.get("start_city") and request.form.get("start_state")):
-            start_address = request.form.get("start_street") + "," + request.form.get("start_city") + "," + request.form.get("start_state")
+            start_address = (request.form.get("start_street") + "," + request.form.get("start_city") +
+                             "," + request.form.get("start_state"))
 
         # Checks to see if the user wanted to use their current location instead
         elif request.form.get("current"):
@@ -116,7 +120,7 @@ def route():
 
         # Inserts the information into the database to use for the history of the user
         db.execute("INSERT INTO routes VALUES(:user, :start, :end, :distance, :time)",
-                     user=session["user_id"], start=start_address, end=end_address, distance=info["distance"], time=totalTime([start_address, end_address]))
+                   user=session["user_id"], start=start_address, end=end_address, distance=info["distance"], time=totalTime([start_address, end_address]))
 
         return render_template("route.html", info=info)
 
@@ -129,31 +133,43 @@ def route():
 def near():
     """Find Places Nearby"""
     if request.method == "POST":
+
+        # Checks to see if all of the fields for the starting address were filled
         if (request.form.get("start_street") and request.form.get("start_city") and request.form.get("start_state")):
-            start_address = request.form.get("start_street") + "," + request.form.get("start_city") + "," + request.form.get("start_state")
+            start_address = (request.form.get("start_street") + "," + request.form.get("start_city") +
+                             "," + request.form.get("start_state"))
+
+        # Checks to see if the user wanted to use their current location
         elif request.form["current"]:
             start_address = reverseGeo(request.form.get("current"))
         else:
             return apology("You do not have a starting location")
 
+        # Checks to see if the user wanted to insert their own search
         if request.form.get("search") == "other":
             search = request.form.get("other")
-        else:
-            search=request.form.get("search")
 
+        # If not, then it will save the search the user selected
+        else:
+            search = request.form.get("search")
+
+        # Checks to see if a number was put in, also if it was positive
         if not request.form.get("number"):
             return apology("Please enter in the number of results you want.")
         elif int(request.form.get("number")) < 1:
             return apology("Please enter in a positve number of searches")
 
+        # Gathers the information on the results of the search in the area
         options = pointOfInterest(start_address, search, int(request.form.get("number")))
 
+        # Inserts the information and data into the table
         db.execute("INSERT INTO search VALUES(:user, :start, :search, :results)",
-                   user=session["user_id"], start=start_address, search=search, results="<>".join(options))
+                   user=session["user_id"], start=start_address, search=search, results=options)
 
         return render_template("near.html", options=options, search=search.capitalize())
     else:
         return render_template("near.html")
+
 
 @app.route("/check", methods=["GET"])
 def check():
@@ -173,6 +189,7 @@ def check():
         return jsonify(False)
 
     return jsonify(True)
+
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -203,6 +220,7 @@ def login():
         # Remember which user has logged in
         session["user_id"] = rows[0]["id"]
 
+        # Increments the sequence to avoid the lastval error with sequencing
         db.execute("SELECT nextval('users_id_seq')")
 
         # Redirect user to home page
@@ -251,11 +269,13 @@ def register():
         db.execute("INSERT INTO users(username, hash) VALUES(:username, :hashed)",
                    username=username, hashed=generate_password_hash(password))
 
+        # Logs in the user with their id as a saved value for the duration of the session
         session["user_id"] = db.execute("SELECT id FROM users WHERE :username = username", username=username)[0]["id"]
 
         return redirect("/")
     else:
         return render_template("register.html")
+
 
 @app.route("/change", methods=["GET", "POST"])
 @login_required
@@ -294,7 +314,6 @@ def change():
         return render_template("change.html")
 
 
-
 def errorhandler(e):
     """Handle error"""
     if not isinstance(e, HTTPException):
@@ -306,9 +325,15 @@ def errorhandler(e):
 for code in default_exceptions:
     app.errorhandler(code)(errorhandler)
 
+
+# Builds the information used for routing the user
 def buildInfo(start, end):
     info = {}
+
+    # Gathers the steps and directions on how to get to the destination
     info["directions"] = directions([start, end])
+
+    # Gathers the total time it would take and formats it into hours, minutes, and seconds
     time = totalTime([start, end])
     temp = time
     text = ""
@@ -321,6 +346,7 @@ def buildInfo(start, end):
 
     text += str(temp) + " seconds"
 
+    # Fills in the information for the route directions that will be displayed then returns this
     info["time"] = text
     info["distance"] = totalDistance([start, end])
     info["destination"] = end
