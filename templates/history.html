@@ -23,7 +23,7 @@
                     <tr>
                         <td>{{ route["start"] }}</td>
                         <td>{{ route["end"] }}</td>
-                        <td>{{ route["distance"] }}</td>
+                        <td>{{ route["distance"] }} miles</td>
                         {% if route["time"] > 3600 %}
                         <td>{{ route["time"] // 3600 }} hours {{ (route["time"] % 3600) // 60 }} minutes {{ ((route["time"] % 3600) % 60) }} seconds</td>
                         {% else %}

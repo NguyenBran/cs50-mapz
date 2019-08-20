@@ -86,10 +86,14 @@ def history():
     routes = db.execute("SELECT * FROM routes WHERE id = :user", user=session["user_id"])
 
     # Turns the result of the searches into a list
-
     for search in searches:
+        search["start"] = search["start"].replace(",", ", ")
         temp = search["results"].replace("<>", ", ").split("||")
         search["results"] = temp[:-1]
+
+    for route in routes:
+        route["start"] = route["start"].replace(",", ", ")
+        route["end"] =route["end"].replace(",", ", ")
 
     return render_template("history.html", searches=searches, routes=routes, name=name)
 
