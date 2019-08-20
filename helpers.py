@@ -208,6 +208,3 @@ def login_required(f):
             return redirect("/login")
         return f(*args, **kwargs)
     return decorated_function
-
-
-print(pointOfInterest("1119 Magnolia Ave, Millbrae, CA", "market", 3))

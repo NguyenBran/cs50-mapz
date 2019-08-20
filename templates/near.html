@@ -8,11 +8,21 @@
     {% if options is defined %}
     <h2>{{ search }} nearby!</h2>
     <br>
-        <ul>
+    <table class="table">
+        <thead>
+            <th scope = "col">Name</th>
+            <th scope = "col">Address</th>
+        </thead>
+        <tbody>
             {% for option in options %}
-                <li><strong>{{ option }}</strong></li>
+            <tr>
+                <td>{{ option["name"] }}</td>
+                <td>{{ option["address"] }}</td>
+            </tr>
             {% endfor %}
-        </ul>
+        </tbody>
+
+    </table>
     {% else %}
         <form action="/near" method="post" name="myForm">
             <h2>Start!</h2>

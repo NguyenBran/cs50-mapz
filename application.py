@@ -162,9 +162,13 @@ def near():
         # Gathers the information on the results of the search in the area
         options = pointOfInterest(start_address, search, int(request.form.get("number")))
 
+        dataInsert = ""
+        for loc in options:
+            dataInsert += loc["name"] + "<>" + loc["address"]
+
         # Inserts the information and data into the table
         db.execute("INSERT INTO search VALUES(:user, :start, :search, :results)",
-                   user=session["user_id"], start=start_address, search=search, results=options)
+                   user=session["user_id"], start=start_address, search=search, results=dataInsert)
 
         return render_template("near.html", options=options, search=search.capitalize())
     else:
