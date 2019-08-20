@@ -87,13 +87,16 @@ def history():
 
     # Turns the result of the searches into a list
     for search in searches:
+        # Adds a space between each part of the address
         search["start"] = search["start"].replace(",", ", ")
+
         temp = search["results"].replace("<>", ", ").split("||")
         search["results"] = temp[:-1]
 
+    # Adds a space between each part of the address
     for route in routes:
         route["start"] = route["start"].replace(",", ", ")
-        route["end"] =route["end"].replace(",", ", ")
+        route["end"] = route["end"].replace(",", ", ")
 
     return render_template("history.html", searches=searches, routes=routes, name=name)
 
@@ -168,6 +171,7 @@ def near():
         # Gathers the information on the results of the search in the area
         options = pointOfInterest(start_address, search, int(request.form.get("number")))
 
+        # Alters how the data is presented so that it is easier to manipulate when being displayed later on
         dataInsert = ""
         for loc in options:
             dataInsert += loc["name"] + "<>" + loc["address"] + "||"
