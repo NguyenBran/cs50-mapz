@@ -3,6 +3,8 @@ A GPS like website where the user gets a list of directions on how to get to the
 
 ## Built With
 - Python
+- HTML
+- CSS
 - Mapquest API
 - Yelp API
 - Postgresql
